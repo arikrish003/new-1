@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archers Global Traders | Wholesale & Retail Pure Spices</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta+Malar:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wood: { 950: '#0c0704', 900: '#1a0e07', 850: '#231309', 800: '#2e190d', 700: '#432615' },
+            gold: { 300: '#fef08a', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
+            cardamom: { 800: '#14301a', 700: '#1e4625', 600: '#2d6336', 500: '#3e844b' }
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '"Mukta Malar"', 'sans-serif'],
+            tamil: ['"Mukta Malar"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #fcfbf9; color: #1e293b; font-family: 'Plus Jakarta Sans', 'Mukta Malar', sans-serif; }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #5c2c06 0%, #854d0e 30%, #b45309 60%, #78350f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 1px rgba(180, 83, 9, 0.15));
+    }
+    .gold-button {
+      background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+      color: #1a0e07;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+    .gold-button:hover {
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -3px rgba(234, 179, 8, 0.35);
+    }
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #1a0e07; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#fcfbf9] text-slate-800 min-h-screen flex flex-col selection:bg-gold-500 selection:text-white">
+
+  <!-- TOP NOTICE BAR -->
+  <div class="bg-gradient-to-r from-amber-900 via-stone-900 to-amber-900 border-b border-gold-500/30 text-xs py-2 px-4 text-center tracking-wider text-amber-100 font-medium flex justify-between items-center max-w-7xl mx-auto w-full">
+    <div class="flex items-center gap-2 mx-auto sm:mx-0">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-cinzel tracking-widest text-gold-400 font-bold">Wholesale & Retail Pure Spices</span>
+      <span class="hidden md:inline text-amber-400/60">| Direct from Farm & Auction | Kudavasal, Thiruvarur</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-4 text-amber-300">
+      <a href="tel:+918903026202" class="hover:text-gold-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-xs"></i> +91 89030 26202</a>
+      <a href="https://wa.me/918903026202" target="_blank" class="hover:text-emerald-400 flex items-center gap-1.5 text-emerald-400 font-semibold"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Order</a>
+    </div>
+  </div>
+
+  <!-- ADMIN NOTIFICATION BAR -->
+  <div id="admin-bar" class="hidden bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-wood-950 font-bold px-4 py-2.5 shadow-lg border-b border-amber-300">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 text-sm">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-base"></i>
+        <span>ADMIN CONSOLE ACTIVE</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openPriceModal()" class="bg-wood-950 text-amber-300 hover:bg-wood-900 px-3 py-1 rounded text-xs tracking-wider uppercase font-extrabold flex items-center gap-1.5 shadow">
+          <i class="fa-solid fa-tags"></i> Edit Spot Prices
+        </button>
+        <button onclick="openChangePwModal()" class="bg-wood-900 text-amber-200 hover:bg-wood-850 px-3 py-1 rounded text-xs tracking-wider uppercase font-bold flex items-center gap-1.5 shadow">
+          <i class="fa-solid fa-key"></i> Change Password (OTP)
+        </button>
+        <button onclick="adminLogout()" class="bg-red-800 hover:bg-red-700 text-white px-2.5 py-1 rounded text-xs tracking-wider uppercase font-bold flex items-center gap-1">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-200/60 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
+      
+      <!-- BRAND & LOGO -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full p-0.5 bg-gradient-to-tr from-gold-600 via-yellow-300 to-gold-700 shadow-xl group-hover:scale-105 transition-transform duration-300">
+          <img src="logo.jpeg" alt="Archers Global Traders Official Emblem" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+          <span class="block font-cinzel text-lg sm:text-2xl font-extrabold tracking-wider gold-gradient-text leading-tight">ARCHERS</span>
+          <span class="block font-cinzel text-[10px] sm:text-xs tracking-[0.25em] text-amber-900 font-extrabold uppercase">GLOBAL TRADERS</span>
+        </div>
+      </a>
+
+      <!-- SEARCH BAR -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4">
+        <div class="relative w-full">
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search 8mm Cardamom, Pepper, Cashew, Honey..." 
+                 class="w-full bg-stone-50 border border-amber-300/70 rounded-full py-2 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition-all">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gold-500/60 text-xs"></i>
+        </div>
+      </div>
+
+      <!-- HEADER ACTIONS -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/918903026202" target="_blank" class="hidden lg:flex items-center gap-2 bg-emerald-900/40 border border-emerald-500/40 hover:bg-emerald-800/50 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-semibold transition">
+          <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
+          <span>Direct Order</span>
+        </a>
+
+        <!-- CUSTOMER ACCOUNT BUTTON -->
+        <button type="button" onclick="openAccountModal()" class="relative bg-white hover:bg-stone-50 border border-amber-300 p-2.5 sm:px-3.5 sm:py-2 rounded-full text-amber-900 flex items-center gap-2 transition shadow-sm" aria-label="Sign In / Account">
+          <i class="fa-solid fa-user text-sm"></i>
+          <span class="hidden sm:inline text-xs font-bold font-cinzel">Sign In / Account</span>
+        </button>
+
+        <!-- CART BUTTON -->
+        <button onclick="toggleCartDrawer()" class="relative bg-[#1c1512] hover:bg-[#1c1512] border border-[#1c1512] p-2.5 sm:px-4 sm:py-2 rounded-full text-white flex items-center gap-2 transition shadow-sm">
+          <i class="fa-solid fa-cart-shopping text-base"></i>
+          <span class="hidden sm:inline text-xs font-bold font-cinzel text-white">Cart</span>
+          <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-[#1c1512] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PRIMARY NAVIGATION -->
+    <nav aria-label="Primary navigation" class="border-t border-amber-100 bg-white/95">
+      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto whitespace-nowrap">
+        <a href="#" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Home</a>
+        <a href="#catalog" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Products</a>
+        <button type="button" onclick="openAboutModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">About Us</button>
+        <a href="#quality" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Quality</a>
+        <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Bulk Orders</a>
+        <button type="button" onclick="openVisitorsModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Visitors</button>
+        <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Contact Us</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="relative bg-gradient-to-b from-white via-amber-50/30 to-[#fcfbf9] border-b border-amber-200/50 py-10 sm:py-16 overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ca8a04_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-7xl mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7 text-center lg:text-left space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c1512] border border-[#1c1512] text-white text-xs font-semibold tracking-wider uppercase">
+          <i class="fa-solid fa-award text-gold-400"></i> Pure Western Ghats Spices • Kudavasal
+        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-cinzel font-black gold-gradient-text leading-tight">
+          ARCHERS GLOBAL TRADERS
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+          100% pure cardamom (8mm+ to 5mm), Malabar pepper, premium whole cashews and pure wild honey. Available for wholesale and retail orders.
+        </p>
+        <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
+          <a href="#catalog" class="gold-button px-6 py-3 rounded-full text-xs sm:text-sm uppercase tracking-widest flex items-center gap-2">
+            <span>Explore Spices</span> <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+          <a href="tel:+918903026202" class="bg-white hover:bg-stone-50 text-slate-800 border border-amber-300 px-6 py-3 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm">
+            <i class="fa-solid fa-phone text-gold-400"></i> +91 89030 26202
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative group">
+          <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-full p-2 bg-gradient-to-tr from-gold-700 via-amber-400 to-yellow-600 shadow-2xl relative">
+            <img src="logo.jpeg" alt="Archers Gold Medallion" class="w-full h-full object-cover rounded-full shadow-inner">
+          </div>
+          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white border border-amber-300 py-1.5 px-4 rounded-full shadow-md flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-certificate text-gold-400 text-sm"></i>
+            <span class="text-xs font-cinzel font-extrabold text-gold-300">100% NATURAL & PURE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE SPOT RATES TICKER -->
+  <div class="bg-amber-50/70 border-y border-amber-200/70 py-2.5 px-4 text-xs">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto no-scrollbar whitespace-nowrap">
+      <div class="flex items-center gap-2 text-amber-900 font-black uppercase tracking-wider shrink-0">
+        <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
+        <span>Today's Spot Rates (1 KG):</span>
+      </div>
+      <div id="ticker-rates" class="flex items-center gap-6 text-slate-700 text-xs shrink-0 font-medium"></div>
+    </div>
+  </div>
+
+  <!-- PRODUCT CATALOG SECTION -->
+  <main id="catalog" class="flex-1 max-w-7xl mx-auto px-4 py-12 w-full">
+    <span id="quality" class="sr-only" aria-hidden="true"></span>
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="text-amber-800 font-cinzel tracking-[0.2em] text-xs uppercase font-extrabold">Official Products & Packaging</span>
+      <h2 class="text-2xl sm:text-4xl font-cinzel font-black gold-gradient-text mt-1">Our Premium Spice Collection</h2>
+      <p class="text-xs sm:text-sm text-slate-500 mt-2">Available in 100g, 250g, 500g, and 1000g (1 Kg) packs with real-time dynamic pricing.</p>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-amber-200 mt-16 pt-12 pb-6 text-slate-600 text-xs">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-gold-500/10">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <img src="logo.jpeg" alt="Archers Logo" class="w-10 h-10 rounded-full border border-gold-500/40 object-cover">
+          <span class="font-cinzel text-base font-black gold-gradient-text tracking-wider">ARCHERS GLOBAL TRADERS</span>
+        </div>
+        <div class="mb-3">
+          <span class="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-900">Arikrishnan & Co</span>
+          <p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-900 mt-1">Archers Families</p>
+        </div>
+        <p class="text-slate-500 leading-relaxed">
+          Wholesale & Retail Pure Spices exporter and distributor located in Kudavasal, Thiruvarur. Supplying premium cardamom grades, black pepper, cashews, and wild honey.
+        </p>
+      </div>
+
+      <div id="contact" class="rounded-2xl bg-[#1c1512] p-5 text-stone-100">
+        <h4 class="font-cinzel text-sm font-bold text-gold-400 uppercase tracking-widest mb-3">Direct Contact</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-phone text-gold-500"></i>
+            <a href="tel:+918903026202" class="hover:text-gold-300 font-semibold">+91 89030 26202</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+            <a href="https://wa.me/918903026202" target="_blank" class="hover:text-emerald-300 font-semibold">+91 89030 26202</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-gold-500"></i>
+            <span>Kudavasal, Thiruvarur District, Tamil Nadu</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-envelope text-gold-500"></i>
+            <span>archersglobaltraders@gmail.com</span>
+          </li>
+        </ul>
+      </div>
+
+      <div id="staff-security" class="rounded-2xl bg-[#1c1512] p-5 text-stone-100">
+        <h4 class="font-cinzel text-sm font-bold text-gold-400 uppercase tracking-widest mb-3">Staff & Security</h4>
+        <p class="text-stone-300 leading-relaxed mb-3">
+          Authorized personnel portal for spot price modifications and stock administration.
+        </p>
+        <button onclick="handleAdminPortalClick()" class="inline-flex items-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-4 py-2 rounded-full text-amber-900 text-xs font-bold transition shadow-sm">
+          <i class="fa-solid fa-lock text-xs"></i>
+          <span>Admin Portal</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 pt-6 flex flex-wrap justify-between items-center gap-4 text-slate-400 text-[11px]">
+      <p>© 2026 Archers Global Traders (Arikrishnan & Co). All Rights Reserved.</p>
+      <div class="flex items-center gap-4">
+        <span>FSSAI Certified Spices</span>
+        <span>•</span>
+        <button onclick="handleAdminPortalClick()" title="Shortcut: Alt+A" class="hover:text-gold-400 transition">
+          <i class="fa-solid fa-shield text-xs"></i> Staff Access
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS & DRAWERS ==================== -->
+
+  <!-- ABOUT US MODAL SCREEN -->
+  <div id="about-modal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-amber-200">
+      <div class="p-6 border-b border-amber-100 flex items-center justify-between bg-amber-50/50">
+        <div class="flex items-center gap-3">
+          <img src="logo.jpeg" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-amber-300">
+          <div>
+            <h3 class="font-cinzel text-lg font-extrabold text-amber-900">About Archers Global Traders</h3>
+            <p class="text-xs text-slate-500 font-semibold">Backed by Arikrishnan & Co</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeAboutModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <p>
+          Welcome to <strong class="text-amber-900">Archers Global Traders</strong>, operated under the esteemed guidance of <strong class="text-amber-900">Arikrishnan & Co</strong>. Based in the agricultural heartland of Kudavasal, Thiruvarur District, Tamil Nadu, we specialize in sourcing and distributing 100% pure, farm-fresh spices and dry fruits.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="bg-stone-50 p-4 rounded-xl border border-amber-100">
+            <h4 class="font-cinzel font-bold text-amber-900 mb-1"><i class="fa-solid fa-seedling text-gold-500 mr-1.5"></i> Direct From Farms</h4>
+            <p class="text-xs text-slate-600">We procure raw cardamom, black pepper, and nuts directly from Western Ghats plantations and certified auctions.</p>
+          </div>
+          <div class="bg-stone-50 p-4 rounded-xl border border-amber-100">
+            <h4 class="font-cinzel font-bold text-amber-900 mb-1"><i class="fa-solid fa-handshake text-gold-500 mr-1.5"></i> Wholesale & Retail</h4>
+            <p class="text-xs text-slate-600">Supplying premium grades to bulk wholesalers, retail shops, and individual households across India with transparent pricing.</p>
+          </div>
+        </div>
+        <p class="pt-2 text-slate-600">
+          Our commitment is rooted in uncompromising quality, hygienic packaging, and trustworthy customer service. Experience the authentic aroma and rich heritage of pure Indian spices with Archers Global Traders.
+        </p>
+      </div>
+      <div class="p-5 border-t border-amber-100 flex justify-end bg-stone-50">
+        <button type="button" onclick="closeAboutModal()" class="gold-button px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider">Close Window</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISITORS SELECTION MODAL -->
+  <div id="visitors-modal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-amber-200">
+      <div class="p-5 border-b border-amber-100 flex items-center justify-between">
+        <div>
+          <h3 class="font-cinzel text-lg font-extrabold text-slate-900">Visitor Spice Inquiry</h3>
+          <p class="text-xs text-slate-500 mt-1">Select the spices and nuts you are interested in.</p>
+        </div>
+        <button type="button" onclick="closeVisitorsModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="visitor-product-list" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      <div class="p-5 border-t border-amber-100 flex flex-wrap justify-end gap-2">
+        <button type="button" onclick="closeVisitorsModal()" class="px-4 py-2 rounded-full border border-slate-300 text-slate-700 text-xs font-bold">Close</button>
+        <button type="button" onclick="sendVisitorInquiry()" class="gold-button px-5 py-2 rounded-full text-xs font-bold flex items-center gap-2">
+          <i class="fa-brands fa-whatsapp"></i> Send Inquiry on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER ACCOUNT / OTP MODAL -->
+  <div id="account-modal" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
+      <div class="p-5 border-b border-amber-100 flex items-center justify-between">
+        <div>
+          <h3 class="font-cinzel text-lg font-extrabold text-slate-900">Sign In / Account</h3>
+          <p class="text-xs text-slate-500 mt-1">Use your mobile number to access your orders.</p>
+        </div>
+        <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="account-login-step" class="p-5 space-y-4">
+        <label class="block text-xs font-bold text-slate-600">Mobile Number</label>
+        <input id="account-mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-stone-50 border border-amber-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gold-400">
+        <button type="button" onclick="requestAccountOtp()" class="gold-button w-full py-3 rounded-xl text-sm font-bold">Send OTP</button>
+        <p id="account-login-message" class="text-xs text-red-600 hidden"></p>
+      </div>
+      <div id="account-otp-step" class="hidden p-5 space-y-4">
+        <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-center text-xs font-semibold">
+          Demo Simulation OTP Code: <span id="account-demo-otp" class="font-bold font-mono underline text-amber-950"></span>
+        </div>
+        <label class="block text-xs font-bold text-slate-600">Enter OTP</label>
+        <input id="account-otp" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" class="w-full bg-stone-50 border border-amber-300 rounded-xl px-4 py-3 text-sm tracking-[0.3em] text-center focus:outline-none focus:ring-1 focus:ring-gold-400">
+        <button type="button" onclick="verifyAccountOtp()" class="gold-button w-full py-3 rounded-xl text-sm font-bold">Verify OTP</button>
+        <button type="button" onclick="backToAccountMobile()" class="w-full py-2 text-xs font-semibold text-slate-500">Change Mobile Number</button>
+      </div>
+      <div id="account-panel" class="hidden p-5">
+        <div class="rounded-xl bg-stone-50 border border-slate-200 p-4 mb-4">
+          <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Signed in as</p>
+          <p id="account-mobile-display" class="font-bold text-slate-900 mt-1"></p>
+        </div>
+        <h4 class="font-cinzel text-sm font-bold text-slate-900 mb-3">Order History</h4>
+        <div id="account-orders" class="space-y-2 max-h-48 overflow-y-auto custom-scroll text-xs text-slate-600">No recent orders found.</div>
+        <button type="button" onclick="accountLogout()" class="mt-4 w-full py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SLIDE-OVER DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
+    <div id="cart-backdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="cart-panel" class="absolute top-0 right-0 h-full w-full max-w-md bg-white border-l border-amber-200 shadow-2xl flex flex-col translate-x-full pointer-events-auto transition-transform duration-300">
+      
+      <!-- DRAWER HEADER -->
+      <div class="p-4 border-b border-amber-100 flex items-center justify-between bg-amber-50/50">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-gold-500 text-lg"></i>
+          <h3 class="font-cinzel text-base font-extrabold text-amber-900">Your Spice Cart</h3>
+        </div>
+        <button onclick="toggleCartDrawer()" class="text-slate-500 hover:text-slate-800 p-1 rounded-full"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- FREE SHIPPING PROGRESS BAR -->
+      <div class="p-3 bg-stone-50 border-b border-amber-100 text-xs">
+        <div class="flex justify-between items-center mb-1 text-[11px] font-semibold">
+          <span id="shipping-text" class="text-amber-900 font-bold">Free delivery unlocked above ₹1,000</span>
+          <span id="shipping-badge" class="text-gold-600 font-bold">Standard</span>
+        </div>
+        <div class="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
+          <div id="shipping-bar" class="h-full bg-gradient-to-r from-amber-500 to-emerald-500 w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- CART ITEMS LIST -->
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scroll"></div>
+
+      <!-- CART FOOTER -->
+      <div class="p-4 border-t border-amber-100 bg-amber-50/30 space-y-3">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-600">Subtotal:</span>
+          <span id="cart-subtotal" class="font-bold text-slate-900 text-base">₹0</span>
+        </div>
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-500">Delivery Charges:</span>
+          <span id="cart-delivery" class="font-bold text-emerald-600">FREE</span>
+        </div>
+        <div class="flex justify-between items-center text-base pt-2 border-t border-gold-500/10 font-bold">
+          <span class="font-cinzel text-amber-900">Total Amount:</span>
+          <span id="cart-total" class="font-cinzel text-xl text-amber-900 font-black">₹0</span>
+        </div>
+
+        <button onclick="openCheckoutModal()" class="w-full gold-button py-3 rounded-xl text-xs uppercase tracking-widest font-extrabold flex items-center justify-center gap-2 shadow-lg">
+          <span>Proceed To Checkout</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+        <button onclick="sendQuickWhatsAppOrder()" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Order via WhatsApp (+91 89030 26202)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-amber-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scroll text-slate-800">
+      <div class="flex justify-between items-center pb-4 border-b border-gold-500/20">
+        <h3 class="font-cinzel text-lg font-bold text-amber-900 flex items-center gap-2">
+          <i class="fa-solid fa-truck-fast"></i> Delivery Address & Payment
+        </h3>
+        <button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-slate-800"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="space-y-4 pt-4 text-xs">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Full Name *</label>
+          <input type="text" id="cust-name" required placeholder="Ex: Prabhu Deva" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Mobile Number *</label>
+            <input type="tel" id="cust-phone" required placeholder="Ex: 8903026202" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
+          </div>
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Pincode *</label>
+            <input type="text" id="cust-pin" required placeholder="Ex: 612601" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Complete Address *</label>
+          <textarea id="cust-address" required rows="2" placeholder="Street, City, District, State" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Payment Method</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2.5 bg-stone-50 border border-slate-200 rounded-lg cursor-pointer hover:border-amber-400">
+              <input type="radio" name="pay-method" value="UPI / GPay / PhonePe" checked class="text-gold-500">
+              <span class="font-bold text-slate-800">UPI / GPay / QR</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 bg-stone-50 border border-slate-200 rounded-lg cursor-pointer hover:border-amber-400">
+              <input type="radio" name="pay-method" value="Cash On Delivery (COD)" class="text-gold-500">
+              <span class="font-bold text-slate-800">Cash on Delivery</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full gold-button py-3 rounded-xl text-xs uppercase tracking-widest font-black shadow-lg">
+          Confirm Order & Generate Invoice
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS MODAL -->
+  <div id="order-success-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-amber-200 rounded-2xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl text-slate-800">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-600 flex items-center justify-center text-3xl mx-auto border border-emerald-500/40">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="font-cinzel text-xl font-bold gold-gradient-text">Order Placed Successfully!</h3>
+      <p class="text-xs text-slate-600 font-medium">Thank you! Your order has been registered. Archers Global Traders will arrange dispatch shortly.</p>
+      
+      <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-left space-y-1">
+        <div class="flex justify-between"><span class="text-slate-500">Order ID:</span><span id="succ-order-id" class="font-mono font-bold text-gold-600">#AGT-0000</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Total Amount:</span><span id="succ-total" class="font-bold text-amber-900">₹0</span></div>
+      </div>
+
+      <div class="pt-2 space-y-2">
+        <a id="succ-whatsapp-btn" href="#" target="_blank" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
+          <i class="fa-brands fa-whatsapp text-base"></i> Send Order Bill To WhatsApp (+91 89030 26202)
+        </a>
+        <button onclick="closeOrderSuccessModal()" class="w-full bg-stone-100 hover:bg-stone-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">
+          Close Window
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-amber-200 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-xs text-slate-800">
+      <div class="text-center mb-4">
+        <img src="logo.jpeg" alt="Archers Medallion" class="w-12 h-12 rounded-full mx-auto border border-gold-400 mb-2 object-cover">
+        <h3 class="font-cinzel text-lg font-bold gold-gradient-text">Staff Authentication</h3>
+        <p class="text-slate-500">Enter credentials to unlock Price Control</p>
+      </div>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="space-y-3">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Admin Username</label>
+          <input type="text" id="admin-user-input" required placeholder="ARCHERS" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400 uppercase font-mono">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Password</label>
+          <div class="relative">
+            <input type="password" id="admin-pass-input" required placeholder="••••••••" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
+            <button type="button" onclick="togglePassVisibility('admin-pass-input')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+        <p id="login-error-msg" class="text-red-500 font-semibold text-[11px] hidden text-center"></p>
+
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="closeAdminLoginModal()" class="w-1/2 bg-stone-200 hover:bg-stone-300 text-slate-700 py-2.5 rounded-xl font-bold">Cancel</button>
+          <button type="submit" class="w-1/2 gold-button py-2.5 rounded-xl font-bold">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN PRICE CONTROL MODAL -->
+  <div id="price-control-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-amber-300 rounded-2xl max-w-xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scroll text-xs text-slate-800">
+      <div class="flex justify-between items-center pb-3 border-b border-gold-500/20 mb-4">
+        <div>
+          <h3 class="font-cinzel text-base font-bold gold-gradient-text flex items-center gap-2">
+            <i class="fa-solid fa-tags text-gold-500"></i> Daily 1-KG Rate Editor
+          </h3>
+          <p class="text-slate-500 text-[11px]">Updating 1-Kg price automatically recalculates 100g, 250g, 500g packages.</p>
+        </div>
+        <button onclick="closePriceModal()" class="text-slate-400 hover:text-slate-800"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div id="price-editor-list" class="space-y-3"></div>
+
+      <div class="pt-5 border-t border-gold-500/20 mt-4 flex justify-between items-center">
+        <button onclick="resetDefaultPrices()" class="text-red-500 hover:text-red-700 underline font-semibold text-[11px]">
+          Reset to Flyer Default Rates
+        </button>
+        <div class="flex gap-2">
+          <button onclick="closePriceModal()" class="bg-stone-200 hover:bg-stone-300 text-slate-700 px-4 py-2 rounded-lg font-bold">Close</button>
+          <button onclick="saveNewPrices()" class="gold-button px-5 py-2 rounded-lg font-bold">Save New Rates</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PASSWORD CHANGE (OTP) MODAL -->
+  <div id="change-pw-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-amber-200 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-xs text-slate-800 space-y-4">
+      <div class="text-center">
+        <h3 class="font-cinzel text-base font-bold gold-gradient-text">Change Password</h3>
+        <p class="text-slate-500 text-[11px] mt-1">OTP will be sent to registered mobile: <span class="text-amber-900 font-bold">+91 89030 26202</span></p>
+      </div>
+
+      <div id="pw-step-1" class="space-y-3">
+        <button onclick="requestOtpForPw()" class="w-full gold-button py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP To Mobile
+        </button>
+      </div>
+
+      <div id="pw-step-2" class="space-y-3 hidden">
+        <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-center font-mono text-[11px]">
+          OTP Sent Successfully! (Demo OTP: <span id="demo-otp-badge" class="font-bold underline">123456</span>)
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Enter 6-Digit OTP</label>
+          <input type="text" id="otp-input" maxlength="6" placeholder="123456" class="w-full bg-stone-50 border border-slate-300 rounded-lg p-2.5 text-center text-base tracking-widest text-slate-800 font-mono">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">New Password</label>
+          <input type="password" id="new-pw-input" placeholder="Enter new password" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Confirm New Password</label>
+          <input type="password" id="confirm-pw-input" placeholder="Confirm password" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800">
+        </div>
+        <p id="otp-err-msg" class="text-red-500 text-center hidden font-semibold"></p>
+
+        <div class="flex gap-2">
+          <button onclick="closeChangePwModal()" class="w-1/2 bg-stone-200 hover:bg-stone-300 text-slate-700 py-2 rounded-lg font-bold">Cancel</button>
+          <button onclick="verifyOtpAndChangePw()" class="w-1/2 gold-button py-2 rounded-lg font-bold">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Product Images Mapping with exact uploaded ZIP assets
+    const ASSETS = {
+      pouch8mm: "cardamom.jpeg",
+      pouchMulti: "cardamom.jpeg",
+      pepperBlack: "pepper.jpeg",
+      pepperWhite: "White Pepper.png",
+      cloves: "clove.jpeg",
+      cinnamonStick: "Cinnamon Rolls.png",
+      starAnise: "Star Anise.png",
+      turmericSalem: "urmeric Fingers.png",
+      cuminJeera: "Cumin Seeds.png",
+      fennelSaunf: "fennel seeds.png",
+      nutmegWhole: "Whole Nutmeg with Shell.png",
+      maceJavithri: "Golden Mace Flower.png",
+      cashewW320: "Whole Cashews.png",
+      cashewSplits: "Whole Cashews.png",
+      honeyRaw: "honey.jpeg"
+    };
+
+    // Catalog Products State
+    const DEFAULT_PRODUCTS = [
+      { id: 'cardamom-8mm', name: 'Cardamom 8MM+ (Bold Jumbo)', tamil: 'ஏலக்காய் 8மிமீ+ (பிரீமியம் தரம்)', category: 'cardamom', baseKg: 4500, img: ASSETS.pouch8mm, badge: '8 MM+ BOLD' },
+      { id: 'cardamom-7mm', name: 'Cardamom 7MM (Super Bold)', tamil: 'ஏலக்காய் 7மிமீ (சூப்பர் போல்டு)', category: 'cardamom', baseKg: 4000, img: ASSETS.pouchMulti, badge: '7 MM' },
+      { id: 'cardamom-65mm', name: 'Cardamom 6.5MM (Medium Bold)', tamil: 'ஏலக்காய் 6.5மிமீ (மீடியம் போல்டு)', category: 'cardamom', baseKg: 3900, img: ASSETS.pouchMulti, badge: '6.5 MM' },
+      { id: 'cardamom-6mm', name: 'Cardamom 6MM (Medium)', tamil: 'ஏலக்காய் 6மிமீ (நடுத்தர அளவு)', category: 'cardamom', baseKg: 3800, img: ASSETS.pouchMulti, badge: '6 MM' },
+      { id: 'cardamom-5mm', name: 'Cardamom 5MM (Small Grade)', tamil: 'ஏலக்காய் 5மிமீ (சிறிய அளவு)', category: 'cardamom', baseKg: 3200, img: ASSETS.pouchMulti, badge: '5 MM' },
+      { id: 'black-pepper', name: 'Malabar Black Pepper (கருப்பு மிளகு)', tamil: 'கருப்பு மிளகு (நாட்டு முதல் தரம்)', category: 'spices', baseKg: 800, img: ASSETS.pepperBlack, badge: 'MALABAR BLACK' },
+      { id: 'white-pepper', name: 'Munnar White Pepper (வெள்ளை மிளகு)', tamil: 'சுத்தமான வெள்ளை மிளகு', category: 'spices', baseKg: 1250, img: ASSETS.pepperWhite, badge: 'PURE WHITE' },
+      { id: 'cloves-whole', name: 'Zanzibar Whole Cloves (கிராம்பு)', tamil: 'முதல் தர கிராம்பு (லவங்கம்)', category: 'spices', baseKg: 1050, img: ASSETS.cloves, badge: 'HANDPICKED' },
+      { id: 'cinnamon-bark', name: 'Ceylon Cinnamon Rolls (சுருள் பட்டை)', tamil: 'இயற்கை சுருள் இலவங்கப்பட்டை', category: 'spices', baseKg: 950, img: ASSETS.cinnamonStick, badge: 'CEYLON BARK' },
+      { id: 'star-anise', name: 'Whole Star Anise (அன்னாசிப்பூ)', tamil: 'அன்னாசிப்பூ (முழு மலர் தரம்)', category: 'spices', baseKg: 850, img: ASSETS.starAnise, badge: 'STAR ANISE' },
+      { id: 'turmeric-salem', name: 'Salem Turmeric Fingers (விரலி மஞ்சள்)', tamil: 'சேலம் ஆர்கானிக் விரலி மஞ்சள்', category: 'spices', baseKg: 320, img: ASSETS.turmericSalem, badge: 'SALEM PURE' },
+      { id: 'royal-cumin', name: 'Royal Cumin Seeds (நற்சீரகம்)', tamil: 'நற்சீரகம் (முதல் தர வாசனை)', category: 'spices', baseKg: 550, img: ASSETS.cuminJeera, badge: 'ROYAL JEERA' },
+      { id: 'fennel-seeds', name: 'Lucknowi Fennel Seeds (சோம்பு)', tamil: 'பச்சை பெருஞ்சீரகம் / சோம்பு', category: 'spices', baseKg: 420, img: ASSETS.fennelSaunf, badge: 'SWEET SAUNF' },
+      { id: 'nutmeg-whole', name: 'Whole Nutmeg with Shell (ஜாதிக்காய்)', tamil: 'முழு ஜாதிக்காய் (நாட்டு ரகம்)', category: 'spices', baseKg: 900, img: ASSETS.nutmegWhole, badge: 'WHOLE NUTMEG' },
+      { id: 'mace-flower', name: 'Golden Mace Flower (ஜாதிப்பத்திரி)', tamil: 'தூய ஜாதிப்பத்திரி (வாசனை மலர்)', category: 'spices', baseKg: 2200, img: ASSETS.maceJavithri, badge: 'GOLDEN MACE' },
+      { id: 'whole-cashew', name: 'Premium Whole Cashews W320 (முந்திரி)', tamil: 'முழு முந்திரி பருப்பு (W320 தரம்)', category: 'nuts', baseKg: 1100, img: ASSETS.cashewW320, badge: 'W320 JUMBO' },
+      { id: 'split-cashew', name: 'Premium Split Cashews (முந்திரி பிளவு)', tamil: 'முந்திரி 2-பிளவு பருப்பு (ஸ்வீட்ஸ் தரம்)', category: 'nuts', baseKg: 980, img: ASSETS.cashewSplits, badge: 'SPLITS 2-PIECE' },
+      { id: 'wild-honey', name: 'Pure Forest Wild Honey (மலைத்தேன்)', tamil: '100% இயற்கை மலைத்தேன்', category: 'honey', baseKg: 650, img: ASSETS.honeyRaw, badge: '100% RAW' }
+    ];
+
+    let products = JSON.parse(localStorage.getItem('agt_products')) || DEFAULT_PRODUCTS;
+    // Correct old cached image paths while preserving saved product details and prices.
+    products = products.map(p => ({ ...p, img: (DEFAULT_PRODUCTS.find(d => d.id === p.id)?.img || p.img) }));
+    localStorage.setItem('agt_products', JSON.stringify(products));
+    let cart = JSON.parse(localStorage.getItem('agt_cart')) || [];
+    let isAdminLoggedIn = false;
+    let selectedWeights = {};
+    let currentGeneratedOtp = null;
+    let currentLoginOtp = null;
+
+    const ADMIN_CREDENTIALS = {
+      user: 'ARCHERS',
+      pass: localStorage.getItem('agt_admin_pw') || 'SPICES@007',
+      mobile: '+91 89030 26202'
+    };
+
+    function initCatalog() {
+      products.forEach(p => { if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000; });
+      renderProducts(products);
+      renderTickerRates();
+      updateCartUI();
+    }
+
+    function englishProductName(name) {
+      return String(name || '').replace(/\s*\([^)]*[\u0B80-\u0BFF][^)]*\)/g, '').replace(/[\u0B80-\u0BFF]/g, '').replace(/\s{2,}/g, ' ').trim();
+    }
+
+    function renderProducts(items) {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = items.map(p => {
+        const activeWeight = selectedWeights[p.id] || 1000;
+        const currentPrice = Math.round(p.baseKg * (activeWeight / 1000));
+        return `
+          <div class="bg-white border border-amber-100 hover:border-amber-400 rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col group">
+            <div class="relative h-60 bg-stone-50 overflow-hidden flex items-center justify-center p-3 border-b border-amber-50">
+              <img src="${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg">
+              <span class="absolute top-3 left-3 bg-white/95 border border-amber-300 text-amber-900 font-cinzel text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
+                ${p.badge}
+              </span>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+              <div>
+                <h3 class="font-cinzel text-sm sm:text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">${englishProductName(p.name)}</h3>
+                <p class="text-xs text-amber-900/80 font-tamil mt-1 font-semibold">${p.tamil}</p>
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Select Weight Pack:</label>
+                <div class="grid grid-cols-4 gap-1.5 text-[11px]">
+                  ${[100, 250, 500, 1000].map(wt => `
+                    <button type="button" onclick="changeVariant('${p.id}',${wt})" 
+                            class="py-1 rounded-lg border font-semibold transition ${activeWeight === wt ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold' : 'bg-stone-50 text-slate-600 border-slate-200 hover:border-amber-300'}">
+                      ${wt === 1000 ? '1 Kg' : wt + 'g'}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] text-slate-400 block font-medium">Pack Price:</span>
+                  <span class="font-cinzel text-lg font-black text-amber-900">₹${currentPrice.toLocaleString('en-IN')}</span>
+                </div>
+                <button onclick="addToCart('${p.id}')" class="gold-button px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
+                  <i class="fa-solid fa-cart-plus text-xs"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function changeVariant(productId, weight) {
+      selectedWeights[productId] = weight;
+      renderProducts(products);
+    }
+
+    function renderTickerRates() {
+      const container = document.getElementById('ticker-rates');
+      container.innerHTML = products.map(p => `
+        <span class="inline-flex items-center gap-1.5">
+          <span class="text-slate-500">${p.badge}:</span>
+          <span class="font-extrabold text-amber-900">₹${p.baseKg.toLocaleString('en-IN')}/Kg</span>
+        </span>
+      `).join(' • ');
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const weight = selectedWeights[productId] || 1000;
+      const unitPrice = Math.round(product.baseKg * (weight / 1000));
+      const existing = cart.find(item => item.id === productId && item.weight === weight);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: englishProductName(product.name),
+          weight: weight,
+          price: unitPrice,
+          img: product.img,
+          qty: 1
+        });
+      }
+      saveCart();
+      updateCartUI();
+      openCartDrawer();
+    }
+
+    function updateCartQty(idx, change) {
+      cart[idx].qty += change;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem('agt_cart', JSON.stringify(cart));
+    }
+
+    function updateCartUI() {
+      const count = cart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('cart-badge').innerText = count;
+
+      const container = document.getElementById('cart-items-container');
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="h-48 flex flex-col items-center justify-center text-center text-slate-400 space-y-2">
+            <i class="fa-solid fa-cart-shopping text-3xl"></i>
+            <p class="text-xs">Your cart is currently empty.</p>
+          </div>
+        `;
+        document.getElementById('cart-subtotal').innerText = '₹0';
+        document.getElementById('cart-total').innerText = '₹0';
+        document.getElementById('shipping-bar').style.width = '0%';
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const isFreeDelivery = subtotal >= 1000;
+      const deliveryFee = isFreeDelivery ? 0 : 50;
+      const total = subtotal + deliveryFee;
+
+      container.innerHTML = cart.map((item, idx) => `
+        <div class="bg-stone-50 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-3 text-xs">
+          <img src="${item.img}" class="w-12 h-12 object-contain bg-white rounded p-1 border border-slate-200">
+          <div class="flex-1">
+            <h4 class="font-bold text-slate-800">${item.name}</h4>
+            <div class="text-[11px] text-slate-500">${item.weight === 1000 ? '1 Kg Pack' : item.weight + 'g Pack'} • ₹${item.price}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="updateCartQty(${idx}, -1)" class="w-6 h-6 rounded bg-white hover:bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold">-</button>
+            <span class="font-bold text-slate-800 w-4 text-center">${item.qty}</span>
+            <button onclick="updateCartQty(${idx}, 1)" class="w-6 h-6 rounded bg-white hover:bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('cart-subtotal').innerText = `₹${subtotal.toLocaleString('en-IN')}`;
+      document.getElementById('cart-delivery').innerText = isFreeDelivery ? 'FREE' : `₹${deliveryFee}`;
+      document.getElementById('cart-total').innerText = `₹${total.toLocaleString('en-IN')}`;
+
+      const progress = Math.min(100, (subtotal / 1000) * 100);
+      document.getElementById('shipping-bar').style.width = `${progress}%`;
+      document.getElementById('shipping-text').innerText = isFreeDelivery ? '🎉 Free Delivery Unlocked!' : `Add ₹${1000 - subtotal} more for Free Delivery`;
+    }
+
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      const panel = document.getElementById('cart-panel');
+      const backdrop = document.getElementById('cart-backdrop');
+      if (panel.classList.contains('translate-x-full')) {
+        openCartDrawer();
+      } else {
+        closeCartDrawer();
+      }
+    }
+
+    function openCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      const panel = document.getElementById('cart-panel');
+      const backdrop = document.getElementById('cart-backdrop');
+      drawer.classList.remove('pointer-events-none');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      panel.classList.remove('translate-x-full');
+    }
+
+    function closeCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      const panel = document.getElementById('cart-panel');
+      const backdrop = document.getElementById('cart-backdrop');
+      backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      panel.classList.add('translate-x-full');
+      setTimeout(() => drawer.classList.add('pointer-events-none'), 300);
+    }
+
+    function handleSearch(query) {
+      const q = query.toLowerCase().trim();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.tamil.includes(q) || p.badge.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    // About Us Modal Screen Controls
+    function openAboutModal() {
+      const modal = document.getElementById('about-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAboutModal() {
+      const modal = document.getElementById('about-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openCheckoutModal() {
+      if (cart.length === 0) return alert('Your cart is empty!');
+      closeCartDrawer();
+      document.getElementById('checkout-modal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').classList.add('hidden');
+    }
+
+    function handlePlaceOrder(e) {
+      e.preventDefault();
+      const orderId = 'AGT-' + Math.floor(100000 + Math.random() * 900000);
+      const name = document.getElementById('cust-name').value;
+      const phone = document.getElementById('cust-phone').value;
+      const pin = document.getElementById('cust-pin').value;
+      const address = document.getElementById('cust-address').value;
+      const payMethod = document.querySelector('input[name="pay-method"]:checked').value;
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const delivery = subtotal >= 1000 ? 0 : 50;
+      const grandTotal = subtotal + delivery;
+
+      let msg = `*NEW SPICE ORDER - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A`;
+      msg += `*Order ID:* #${orderId}%0A`;
+      msg += `*Customer:* ${name} (${phone})%0A`;
+      msg += `*Address:* ${address}, Pincode: ${pin}%0A`;
+      msg += `*Payment:* ${payMethod}%0A%0A`;
+      msg += `*ITEMS ORDERED:*%0A`;
+      cart.forEach((i, idx) => {
+        msg += `${idx + 1}. ${i.name} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}%0A`;
+      });
+      msg += `%0A*Total Amount:* ₹${grandTotal}%0A`;
+
+      const waUrl = `https://wa.me/918903026202?text=${msg}`;
+      document.getElementById('succ-whatsapp-btn').href = waUrl;
+      document.getElementById('succ-order-id').innerText = '#' + orderId;
+      document.getElementById('succ-total').innerText = '₹' + grandTotal.toLocaleString('en-IN');
+
+      cart = [];
+      saveCart();
+      updateCartUI();
+
+      closeCheckoutModal();
+      document.getElementById('order-success-modal').classList.remove('hidden');
+    }
+
+    function closeOrderSuccessModal() {
+      document.getElementById('order-success-modal').classList.add('hidden');
+    }
+
+    function sendQuickWhatsAppOrder() {
+      if (cart.length === 0) return alert('Cart is empty!');
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      let msg = `*QUICK ORDER INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A`;
+      cart.forEach((i, idx) => {
+        msg += `${idx + 1}. ${i.name} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}%0A`;
+      });
+      msg += `%0A*Cart Total:* ₹${subtotal}%0APlease confirm delivery time.`;
+      window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
+    }
+
+    function openAccountModal() {
+      const modal = document.getElementById('account-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      const savedMobile = localStorage.getItem('agt_customer_mobile');
+      if (savedMobile) showAccountPanel(savedMobile);
+      else resetAccountModal();
+    }
+
+    function closeAccountModal() {
+      const modal = document.getElementById('account-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function resetAccountModal() {
+      document.getElementById('account-login-step').classList.remove('hidden');
+      document.getElementById('account-otp-step').classList.add('hidden');
+      document.getElementById('account-panel').classList.add('hidden');
+      document.getElementById('account-mobile').value = '';
+    }
+
+    function requestAccountOtp() {
+      const mobile = document.getElementById('account-mobile').value.trim();
+      const msgEl = document.getElementById('account-login-message');
+
+      if (mobile.length !== 10) {
+        msgEl.innerText = 'Please enter a valid 10-digit mobile number.';
+        msgEl.classList.remove('hidden');
+        return;
+      }
+
+      currentLoginOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      msgEl.classList.add('hidden');
+
+      document.getElementById('account-demo-otp').innerText = currentLoginOtp;
+      document.getElementById('account-login-step').classList.add('hidden');
+      document.getElementById('account-otp-step').classList.remove('hidden');
+    }
+
+    function verifyAccountOtp() {
+      const enteredOtp = document.getElementById('account-otp').value.trim();
+      const mobile = document.getElementById('account-mobile').value.trim();
+
+      if (enteredOtp === currentLoginOtp) {
+        localStorage.setItem('agt_customer_mobile', mobile);
+        showAccountPanel(mobile);
+      } else {
+        alert('Incorrect OTP entered! Please check the demo OTP code displayed above.');
+      }
+    }
+
+    function showAccountPanel(mobile) {
+      document.getElementById('account-login-step').classList.add('hidden');
+      document.getElementById('account-otp-step').classList.add('hidden');
+      document.getElementById('account-panel').classList.remove('hidden');
+      document.getElementById('account-mobile-display').innerText = '+91 ' + mobile;
+    }
+
+    function backToAccountMobile() {
+      document.getElementById('account-otp-step').classList.add('hidden');
+      document.getElementById('account-login-step').classList.remove('hidden');
+    }
+
+    function accountLogout() {
+      localStorage.removeItem('agt_customer_mobile');
+      resetAccountModal();
+    }
+
+    function openVisitorsModal() {
+      const modal = document.getElementById('visitors-modal');
+      const list = document.getElementById('visitor-product-list');
+      list.innerHTML = products.map(p => `
+        <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-amber-300 bg-stone-50 cursor-pointer">
+          <input type="checkbox" value="${p.id}" class="visitor-product h-4 w-4 accent-amber-600">
+          <span class="text-xs font-bold text-slate-800">${englishProductName(p.name)}</span>
+        </label>
+      `).join('');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeVisitorsModal() {
+      const modal = document.getElementById('visitors-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function sendVisitorInquiry() {
+      const selectedIds = [...document.querySelectorAll('.visitor-product:checked')].map(el => el.value);
+      if (!selectedIds.length) return alert('Please select at least one spice or nut.');
+      const selected = products.filter(p => selectedIds.includes(p.id));
+      const names = selected.map(p => englishProductName(p.name));
+      const msg = `*VISITOR SPICE INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A%0A${names.map((n,i)=>`${i+1}.${n}`).join('%0A')}%0A%0APlease share availability and wholesale/retail pricing.`;
+      window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
+    }
+
+    function handleAdminPortalClick() {
+      if (isAdminLoggedIn) {
+        openPriceModal();
+      } else {
+        document.getElementById('admin-login-modal').classList.remove('hidden');
+      }
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('admin-login-modal').classList.add('hidden');
+      document.getElementById('login-error-msg').classList.add('hidden');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('admin-user-input').value.trim().toUpperCase();
+      const p = document.getElementById('admin-pass-input').value.trim();
+      const currentPw = localStorage.getItem('agt_admin_pw') || ADMIN_CREDENTIALS.pass;
+
+      if (u === ADMIN_CREDENTIALS.user && p === currentPw) {
+        isAdminLoggedIn = true;
+        closeAdminLoginModal();
+        document.getElementById('admin-bar').classList.remove('hidden');
+        openPriceModal();
+      } else {
+        const err = document.getElementById('login-error-msg');
+        err.innerText = 'Invalid Admin credentials!';
+        err.classList.remove('hidden');
+      }
+    }
+
+    function adminLogout() {
+      isAdminLoggedIn = false;
+      document.getElementById('admin-bar').classList.add('hidden');
+      closePriceModal();
+      closeChangePwModal();
+      alert('Admin logged out successfully.');
+    }
+
+    function openPriceModal() {
+      if (!isAdminLoggedIn) return handleAdminPortalClick();
+      const container = document.getElementById('price-editor-list');
+      container.innerHTML = products.map((p, idx) => `
+        <div class="bg-stone-50 p-2.5 rounded-lg border border-slate-200 flex items-center justify-between gap-3">
+          <div class="flex-1">
+            <span class="font-bold text-slate-800">${englishProductName(p.name)}</span>
+            <span class="text-[10px] text-slate-400 block">${p.badge}</span>
+          </div>
+          <div class="flex items-center gap-1.5 w-32">
+            <span class="text-amber-600 font-bold">₹</span>
+            <input type="number" id="price-input-${idx}" value="${p.baseKg}" class="w-full bg-white border border-amber-300 rounded p-1.5 text-right font-bold text-slate-900">
+            <span class="text-slate-400 text-[11px]">/Kg</span>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('price-control-modal').classList.remove('hidden');
+    }
+
+    function closePriceModal() {
+      document.getElementById('price-control-modal').classList.add('hidden');
+    }
+
+    function saveNewPrices() {
+      products.forEach((p, idx) => {
+        const val = parseFloat(document.getElementById(`price-input-${idx}`).value);
+        if (!isNaN(val) && val > 0) p.baseKg = val;
+      });
+      localStorage.setItem('agt_products', JSON.stringify(products));
+      renderProducts(products);
+      renderTickerRates();
+      updateCartUI();
+      closePriceModal();
+      alert('New Spot Prices Saved Successfully! All catalog packs updated.');
+    }
+
+    function resetDefaultPrices() {
+      if (confirm('Reset all prices back to flyer default rates?')) {
+        products = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+        localStorage.setItem('agt_products', JSON.stringify(products));
+        renderProducts(products);
+        renderTickerRates();
+        updateCartUI();
+        closePriceModal();
+      }
+    }
+
+    function openChangePwModal() {
+      if (!isAdminLoggedIn) return handleAdminPortalClick();
+      document.getElementById('pw-step-1').classList.remove('hidden');
+      document.getElementById('pw-step-2').classList.add('hidden');
+      document.getElementById('change-pw-modal').classList.remove('hidden');
+    }
+
+    function closeChangePwModal() {
+      document.getElementById('change-pw-modal').classList.add('hidden');
+    }
+
+    function requestOtpForPw() {
+      currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById('demo-otp-badge').innerText = currentGeneratedOtp;
+      document.getElementById('pw-step-1').classList.add('hidden');
+      document.getElementById('pw-step-2').classList.remove('hidden');
+    }
+
+    function verifyOtpAndChangePw() {
+      const enteredOtp = document.getElementById('otp-input').value.trim();
+      const newPw = document.getElementById('new-pw-input').value.trim();
+      const confirmPw = document.getElementById('confirm-pw-input').value.trim();
+      const err = document.getElementById('otp-err-msg');
+
+      if (enteredOtp !== currentGeneratedOtp) {
+        err.innerText = 'Incorrect OTP entered!';
+        err.classList.remove('hidden');
+        return;
+      }
+      if (!newPw || newPw.length < 6) {
+        err.innerText = 'Password must be at least 6 characters!';
+        err.classList.remove('hidden');
+        return;
+      }
+      if (newPw !== confirmPw) {
+        err.innerText = 'Passwords do not match!';
+        err.classList.remove('hidden');
+        return;
+      }
+
+      localStorage.setItem('agt_admin_pw', newPw);
+      ADMIN_CREDENTIALS.pass = newPw;
+      alert('Password changed successfully! Keep it confidential.');
+      closeChangePwModal();
+    }
+
+    function togglePassVisibility(id) {
+      const el = document.getElementById(id);
+      el.type = el.type === 'password' ? 'text' : 'password';
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && (e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        handleAdminPortalClick();
+      }
+    });
+
+    window.onload = initCatalog;
+  </script>
+</body>
+</html>
