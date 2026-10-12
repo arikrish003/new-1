@@ -326,6 +326,67 @@
     </div>
   </div>
 
+  <!-- CART DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-[70] pointer-events-none">
+    <button id="cart-backdrop" type="button" onclick="closeCartDrawer()" aria-label="Close cart" class="absolute inset-0 bg-black/60 opacity-0 pointer-events-none transition-opacity duration-300"></button>
+    <aside id="cart-panel" aria-label="Shopping cart" class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300">
+      <div class="p-5 border-b border-amber-100 flex items-center justify-between">
+        <div><h2 class="font-cinzel text-lg font-extrabold text-amber-900">Your Cart</h2><p class="text-xs text-slate-500 mt-1">Review your selected products</p></div>
+        <button type="button" onclick="closeCartDrawer()" aria-label="Close cart" class="p-2 text-slate-500 hover:text-slate-900"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <div class="px-5 pt-4">
+        <div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div id="shipping-bar" class="h-full bg-emerald-500 transition-all" style="width:0%"></div></div>
+        <p id="shipping-text" class="text-[11px] text-slate-500 mt-2">Add ₹1000 more for Free Delivery</p>
+      </div>
+      <div id="cart-items-container" class="flex-1 overflow-y-auto custom-scroll p-5 space-y-3"></div>
+      <div class="border-t border-amber-100 p-5 space-y-3 bg-white">
+        <div class="flex justify-between text-sm text-slate-600"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+        <div class="flex justify-between text-sm text-slate-600"><span>Delivery</span><span id="cart-delivery">₹50</span></div>
+        <div class="flex justify-between text-base font-extrabold text-amber-900"><span>Total</span><span id="cart-total">₹0</span></div>
+        <button type="button" onclick="openCheckoutModal()" class="gold-button w-full py-3 rounded-xl text-sm font-extrabold">Proceed to Checkout</button>
+        <button type="button" onclick="sendQuickWhatsAppOrder()" class="w-full py-3 rounded-xl border border-emerald-600 text-emerald-800 text-sm font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Quick WhatsApp Inquiry</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal" class="fixed inset-0 z-[80] hidden bg-black/70 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-amber-200">
+      <div class="p-5 border-b border-amber-100 flex items-center justify-between">
+        <div><h2 class="font-cinzel text-lg font-extrabold text-amber-900">Checkout</h2><p class="text-xs text-slate-500 mt-1">Enter your details to prepare your order</p></div>
+        <button type="button" onclick="closeCheckoutModal()" aria-label="Close checkout" class="p-2 text-slate-500"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <form class="p-5 space-y-4" onsubmit="handlePlaceOrder(event)">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="block text-xs font-bold text-slate-700">Full Name *<input id="cust-name" name="name" required autocomplete="name" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal" /></label>
+          <label class="block text-xs font-bold text-slate-700">Mobile Number *<input id="cust-phone" name="phone" type="tel" required autocomplete="tel" pattern="[0-9+() -]{8,18}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal" /></label>
+          <label class="block text-xs font-bold text-slate-700 sm:col-span-2">Email (optional)<input id="cust-email" name="email" type="email" autocomplete="email" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal" /></label>
+          <label class="block text-xs font-bold text-slate-700">PIN Code *<input id="cust-pin" name="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal" /></label>
+          <label class="block text-xs font-bold text-slate-700 sm:col-span-2">Delivery Address *<textarea id="cust-address" name="address" required rows="3" autocomplete="street-address" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal"></textarea></label>
+        </div>
+        <fieldset class="space-y-2"><legend class="text-xs font-extrabold text-slate-700">Payment Preference *</legend>
+          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Cash on Delivery" checked> Cash on Delivery</label>
+          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Online Payment (arrange with seller)"> Online Payment (confirm with seller)</label>
+          <p class="text-[11px] text-slate-500">Online payment is not processed on this website. Confirm payment instructions directly with Archers Global Traders.</p>
+        </fieldset>
+        <div class="flex gap-3"><button type="button" onclick="closeCheckoutModal()" class="flex-1 rounded-xl border border-slate-300 py-3 text-sm font-bold text-slate-700">Back</button><button type="submit" class="gold-button flex-1 rounded-xl py-3 text-sm font-extrabold">Place Order</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS / WHATSAPP HANDOFF MODAL -->
+  <div id="order-success-modal" class="fixed inset-0 z-[90] hidden bg-black/70 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-amber-200 p-6 text-center">
+      <div class="mx-auto mb-3 w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-check text-2xl"></i></div>
+      <h2 class="font-cinzel text-xl font-extrabold text-amber-900">Order Prepared!</h2>
+      <p class="text-sm text-slate-600 mt-2">Order reference: <strong id="succ-order-id"></strong></p>
+      <p class="text-sm text-slate-600 mt-1">Total: <strong id="succ-total"></strong></p>
+      <p class="text-xs text-slate-500 mt-3">Tap below to send the order details to Archers Global Traders on WhatsApp. Your order is not confirmed until the seller replies.</p>
+      <a id="succ-whatsapp-btn" href="#" target="_blank" rel="noopener" class="mt-5 block rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white py-3 font-extrabold text-sm"><i class="fa-brands fa-whatsapp mr-1"></i> Send Order details to WhatsApp</a>
+      <button type="button" onclick="closeOrderSuccessModal()" class="mt-3 w-full rounded-xl border border-slate-300 py-2.5 text-sm font-bold text-slate-700">Close</button>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // Product image filenames match the supplied images ZIP exactly.
@@ -364,6 +425,8 @@
     let currentGeneratedOtp = null;
     let currentLoginOtp = null;
     const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbzN8Q26fDCPsLQBFTb0_qDFvcB0e7Rvh3MlP-WpmhxA7CH0DP0HzUbvy_Ois4k5KiQE9g/exec';
+    let isSubmittingOrder = false;
+    let placeOrderButton = null;
 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-navigation-menu');
@@ -517,6 +580,7 @@
       document.getElementById('cart-badge').innerText = count;
 
       const container = document.getElementById('cart-items-container');
+      if (!container) return;
       if (cart.length === 0) {
         container.innerHTML = `
           <div class="h-48 flex flex-col items-center justify-center text-center text-slate-400 space-y-2">
@@ -563,6 +627,7 @@
       const drawer = document.getElementById('cart-drawer');
       const panel = document.getElementById('cart-panel');
       const backdrop = document.getElementById('cart-backdrop');
+      if (!panel || !drawer || !backdrop) return;
       if (panel.classList.contains('translate-x-full')) {
         openCartDrawer();
       } else {
@@ -574,6 +639,7 @@
       const drawer = document.getElementById('cart-drawer');
       const panel = document.getElementById('cart-panel');
       const backdrop = document.getElementById('cart-backdrop');
+      if (!drawer || !panel || !backdrop) return;
       drawer.classList.remove('pointer-events-none');
       backdrop.classList.remove('opacity-0', 'pointer-events-none');
       backdrop.classList.add('opacity-100', 'pointer-events-auto');
@@ -584,6 +650,7 @@
       const drawer = document.getElementById('cart-drawer');
       const panel = document.getElementById('cart-panel');
       const backdrop = document.getElementById('cart-backdrop');
+      if (!drawer || !panel || !backdrop) return;
       backdrop.classList.remove('opacity-100', 'pointer-events-auto');
       backdrop.classList.add('opacity-0', 'pointer-events-none');
       panel.classList.add('translate-x-full');
@@ -621,9 +688,38 @@
 
     async function handlePlaceOrder(e) {
       e.preventDefault();
+
+      // Prevent rapid double-clicks or repeated form submissions from creating two orders.
+      if (isSubmittingOrder) return;
       if (!cart.length) return alert('Your cart is empty!');
+
+      isSubmittingOrder = true;
+      const form = e.currentTarget;
+      placeOrderButton = form ? form.querySelector('button[type="submit"]') : null;
+      if (placeOrderButton) {
+        placeOrderButton.disabled = true;
+        placeOrderButton.dataset.originalText = placeOrderButton.textContent;
+        placeOrderButton.textContent = 'Preparing Order...';
+        placeOrderButton.classList.add('opacity-60', 'cursor-not-allowed');
+      }
+
+      const releaseOrderLock = () => {
+        isSubmittingOrder = false;
+        if (placeOrderButton) {
+          placeOrderButton.disabled = false;
+          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Place Order';
+          placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+        }
+        placeOrderButton = null;
+      };
+
       const unavailable = cart.find(i => { const p=products.find(x=>x.id===i.id); return !p || p.inStock===false || !(Number(p.baseKg)>0) || Math.round(Number(p.baseKg)*(i.weight/1000))!==Number(i.price); });
-      if (unavailable) { alert('A product price or stock status has changed. Please refresh the catalogue and check your cart again.'); loadPublicProducts(); return; }
+      if (unavailable) {
+        alert('A product price or stock status has changed. Please refresh the catalogue and check your cart again.');
+        loadPublicProducts();
+        releaseOrderLock();
+        return;
+      }
       const orderId = 'AGT-' + Date.now().toString().slice(-8);
       const name = document.getElementById('cust-name').value.trim();
       const phone = document.getElementById('cust-phone').value.trim();
@@ -695,13 +791,21 @@
 
     function closeOrderSuccessModal() {
       document.getElementById('order-success-modal').classList.add('hidden');
+      // Allow the customer to place a new, separate order after closing the success screen.
+      isSubmittingOrder = false;
+      if (placeOrderButton) {
+        placeOrderButton.disabled = false;
+        placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Place Order';
+        placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+      placeOrderButton = null;
     }
 
     function sendQuickWhatsAppOrder() {
       if (cart.length === 0) return alert('Cart is empty!');
       const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       const lines = [
-        '*QUICK ORDER INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*',
+        '*NEW SPICE ORDER - ARCHERS GLOBAL TRADERS*',
         ...cart.map((i, idx) => `${idx + 1}. ${englishProductName(i.name)} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}`),
         '', `*Cart Total:* ₹${subtotal}`, 'Please confirm availability and delivery time.'
       ];
@@ -749,7 +853,7 @@
       if (!selectedIds.length) return alert('Please select at least one spice or nut.');
       const selected = products.filter(p => selectedIds.includes(p.id));
       const names = selected.map(p => englishProductName(p.name));
-      const msg = `*VISITOR SPICE INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A%0A${names.map((n,i)=>`${i+1}.${n}`).join('%0A')}%0A%0APlease share availability and wholesale/retail pricing.`;
+      const msg = `*VISITOR SPICE INQUIRY - ARCHERS GLOBAL TRADERS*%0A%0A${names.map((n,i)=>`${i+1}.${n}`).join('%0A')}%0A%0APlease share availability and wholesale/retail pricing.`;
       window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
     }
 
