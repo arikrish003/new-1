@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Archers Global Traders supplies premium spices, nuts and honey for wholesale and retail orders in India.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.png" type="image/png">
   <title>Archers Global Traders | Wholesale & Retail Pure Spices</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,27 +67,6 @@
     </div>
   </div>
 
-  <!-- ADMIN NOTIFICATION BAR -->
-  <div id="admin-bar" class="hidden bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-wood-950 font-bold px-4 py-2.5 shadow-lg border-b border-amber-300">
-    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 text-sm">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-shield-halved text-base"></i>
-        <span>ADMIN CONSOLE ACTIVE</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <button onclick="openPriceModal()" class="bg-wood-950 text-amber-300 hover:bg-wood-900 px-3 py-1 rounded text-xs tracking-wider uppercase font-extrabold flex items-center gap-1.5 shadow">
-          <i class="fa-solid fa-tags"></i> Edit Spot Prices
-        </button>
-        <button onclick="openChangePwModal()" class="bg-wood-900 text-amber-200 hover:bg-wood-850 px-3 py-1 rounded text-xs tracking-wider uppercase font-bold flex items-center gap-1.5 shadow">
-          <i class="fa-solid fa-key"></i> Change Password (OTP)
-        </button>
-        <button onclick="adminLogout()" class="bg-red-800 hover:bg-red-700 text-white px-2.5 py-1 rounded text-xs tracking-wider uppercase font-bold flex items-center gap-1">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN HEADER / NAVBAR -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-200/60 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
@@ -133,7 +115,13 @@
 
     <!-- PRIMARY NAVIGATION -->
     <nav aria-label="Primary navigation" class="border-t border-amber-100 bg-white/95">
-      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto whitespace-nowrap">
+      <!-- Mobile menu toggle; desktop navigation remains unchanged -->
+      <div class="sm:hidden max-w-7xl mx-auto px-4 py-2 flex justify-end">
+        <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation-menu" onclick="toggleMobileMenu()" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-amber-300 bg-white text-amber-900 font-bold text-sm shadow-sm">
+          <i id="mobile-menu-icon" class="fa-solid fa-bars" aria-hidden="true"></i><span>Menu</span>
+        </button>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 py-2 hidden sm:flex items-center justify-center gap-2 sm:gap-4 whitespace-nowrap">
         <a href="#" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Home</a>
         <a href="#catalog" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Products</a>
         <button type="button" onclick="openAboutModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">About Us</button>
@@ -141,6 +129,17 @@
         <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Bulk Orders</a>
         <button type="button" onclick="openVisitorsModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Visitors</button>
         <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Contact Us</a>
+      </div>
+      <div id="mobile-navigation-menu" class="hidden sm:hidden border-t border-amber-100 bg-white px-4 pb-3">
+        <div class="grid grid-cols-1 gap-1 pt-2">
+          <a href="#" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Home</a>
+          <a href="#catalog" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Products</a>
+          <button type="button" onclick="closeMobileMenu(); openAboutModal()" class="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">About Us</button>
+          <a href="#quality" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Quality</a>
+          <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Bulk Orders</a>
+          <button type="button" onclick="closeMobileMenu(); openVisitorsModal()" class="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Visitors</button>
+          <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Contact Us</a>
+        </div>
       </div>
     </nav>
   </header>
@@ -245,27 +244,11 @@
         </ul>
       </div>
 
-      <div id="staff-security" class="rounded-2xl bg-[#1c1512] p-5 text-stone-100">
-        <h4 class="font-cinzel text-sm font-bold text-gold-400 uppercase tracking-widest mb-3">Staff & Security</h4>
-        <p class="text-stone-300 leading-relaxed mb-3">
-          Authorized personnel portal for spot price modifications and stock administration.
-        </p>
-        <button onclick="handleAdminPortalClick()" class="inline-flex items-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-4 py-2 rounded-full text-amber-900 text-xs font-bold transition shadow-sm">
-          <i class="fa-solid fa-lock text-xs"></i>
-          <span>Admin Portal</span>
-        </button>
-      </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 pt-6 flex flex-wrap justify-between items-center gap-4 text-slate-400 text-[11px]">
       <p>© 2026 Archers Global Traders (Arikrishnan & Co). All Rights Reserved.</p>
-      <div class="flex items-center gap-4">
-        <span>FSSAI Certified Spices</span>
-        <span>•</span>
-        <button onclick="handleAdminPortalClick()" title="Shortcut: Alt+A" class="hover:text-gold-400 transition">
-          <i class="fa-solid fa-shield text-xs"></i> Staff Access
-        </button>
-      </div>
+      <div class="flex items-center gap-4"><span>FSSAI Certified Spices</span></div>
     </div>
   </footer>
 
@@ -328,336 +311,102 @@
     </div>
   </div>
 
-  <!-- CUSTOMER ACCOUNT / OTP MODAL -->
+  <!-- CUSTOMER ACCOUNT MODAL: secure authentication to be configured before enabling tracking -->
   <div id="account-modal" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
       <div class="p-5 border-b border-amber-100 flex items-center justify-between">
-        <div>
-          <h3 class="font-cinzel text-lg font-extrabold text-slate-900">Sign In / Account</h3>
-          <p class="text-xs text-slate-500 mt-1">Use your mobile number to access your orders.</p>
-        </div>
+        <div><h3 class="font-cinzel text-lg font-extrabold text-slate-900">Customer Account</h3><p class="text-xs text-slate-500 mt-1">Order as a guest, or contact us for an order update.</p></div>
         <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div id="account-login-step" class="p-5 space-y-4">
-        <label class="block text-xs font-bold text-slate-600">Mobile Number</label>
-        <input id="account-mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-stone-50 border border-amber-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gold-400">
-        <button type="button" onclick="requestAccountOtp()" class="gold-button w-full py-3 rounded-xl text-sm font-bold">Send OTP</button>
-        <p id="account-login-message" class="text-xs text-red-600 hidden"></p>
-      </div>
-      <div id="account-otp-step" class="hidden p-5 space-y-4">
-        <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-center text-xs font-semibold">
-          Demo Simulation OTP Code: <span id="account-demo-otp" class="font-bold font-mono underline text-amber-950"></span>
-        </div>
-        <label class="block text-xs font-bold text-slate-600">Enter OTP</label>
-        <input id="account-otp" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" class="w-full bg-stone-50 border border-amber-300 rounded-xl px-4 py-3 text-sm tracking-[0.3em] text-center focus:outline-none focus:ring-1 focus:ring-gold-400">
-        <button type="button" onclick="verifyAccountOtp()" class="gold-button w-full py-3 rounded-xl text-sm font-bold">Verify OTP</button>
-        <button type="button" onclick="backToAccountMobile()" class="w-full py-2 text-xs font-semibold text-slate-500">Change Mobile Number</button>
-      </div>
-      <div id="account-panel" class="hidden p-5">
-        <div class="rounded-xl bg-stone-50 border border-slate-200 p-4 mb-4">
-          <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Signed in as</p>
-          <p id="account-mobile-display" class="font-bold text-slate-900 mt-1"></p>
-        </div>
-        <h4 class="font-cinzel text-sm font-bold text-slate-900 mb-3">Order History</h4>
-        <div id="account-orders" class="space-y-2 max-h-48 overflow-y-auto custom-scroll text-xs text-slate-600">No recent orders found.</div>
-        <button type="button" onclick="accountLogout()" class="mt-4 w-full py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700">Sign Out</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CART SLIDE-OVER DRAWER -->
-  <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
-    <div id="cart-backdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <div id="cart-panel" class="absolute top-0 right-0 h-full w-full max-w-md bg-white border-l border-amber-200 shadow-2xl flex flex-col translate-x-full pointer-events-auto transition-transform duration-300">
-      
-      <!-- DRAWER HEADER -->
-      <div class="p-4 border-b border-amber-100 flex items-center justify-between bg-amber-50/50">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-bag-shopping text-gold-500 text-lg"></i>
-          <h3 class="font-cinzel text-base font-extrabold text-amber-900">Your Spice Cart</h3>
-        </div>
-        <button onclick="toggleCartDrawer()" class="text-slate-500 hover:text-slate-800 p-1 rounded-full"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-
-      <!-- FREE SHIPPING PROGRESS BAR -->
-      <div class="p-3 bg-stone-50 border-b border-amber-100 text-xs">
-        <div class="flex justify-between items-center mb-1 text-[11px] font-semibold">
-          <span id="shipping-text" class="text-amber-900 font-bold">Free delivery unlocked above ₹1,000</span>
-          <span id="shipping-badge" class="text-gold-600 font-bold">Standard</span>
-        </div>
-        <div class="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
-          <div id="shipping-bar" class="h-full bg-gradient-to-r from-amber-500 to-emerald-500 w-0 transition-all duration-300"></div>
-        </div>
-      </div>
-
-      <!-- CART ITEMS LIST -->
-      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scroll"></div>
-
-      <!-- CART FOOTER -->
-      <div class="p-4 border-t border-amber-100 bg-amber-50/30 space-y-3">
-        <div class="flex justify-between items-center text-sm">
-          <span class="text-slate-600">Subtotal:</span>
-          <span id="cart-subtotal" class="font-bold text-slate-900 text-base">₹0</span>
-        </div>
-        <div class="flex justify-between items-center text-xs">
-          <span class="text-slate-500">Delivery Charges:</span>
-          <span id="cart-delivery" class="font-bold text-emerald-600">FREE</span>
-        </div>
-        <div class="flex justify-between items-center text-base pt-2 border-t border-gold-500/10 font-bold">
-          <span class="font-cinzel text-amber-900">Total Amount:</span>
-          <span id="cart-total" class="font-cinzel text-xl text-amber-900 font-black">₹0</span>
-        </div>
-
-        <button onclick="openCheckoutModal()" class="w-full gold-button py-3 rounded-xl text-xs uppercase tracking-widest font-extrabold flex items-center justify-center gap-2 shadow-lg">
-          <span>Proceed To Checkout</span> <i class="fa-solid fa-arrow-right text-xs"></i>
-        </button>
-        <button onclick="sendQuickWhatsAppOrder()" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition">
-          <i class="fa-brands fa-whatsapp text-sm"></i> Order via WhatsApp (+91 89030 26202)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT MODAL -->
-  <div id="checkout-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-amber-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scroll text-slate-800">
-      <div class="flex justify-between items-center pb-4 border-b border-gold-500/20">
-        <h3 class="font-cinzel text-lg font-bold text-amber-900 flex items-center gap-2">
-          <i class="fa-solid fa-truck-fast"></i> Delivery Address & Payment
-        </h3>
-        <button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-slate-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-
-      <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="space-y-4 pt-4 text-xs">
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Full Name *</label>
-          <input type="text" id="cust-name" required placeholder="Ex: Prabhu Deva" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-slate-700 font-semibold mb-1">Mobile Number *</label>
-            <input type="tel" id="cust-phone" required placeholder="Ex: 8903026202" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
-          </div>
-          <div>
-            <label class="block text-slate-700 font-semibold mb-1">Pincode *</label>
-            <input type="text" id="cust-pin" required placeholder="Ex: 612601" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
-          </div>
-        </div>
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Complete Address *</label>
-          <textarea id="cust-address" required rows="2" placeholder="Street, City, District, State" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Payment Method</label>
-          <div class="grid grid-cols-2 gap-2">
-            <label class="flex items-center gap-2 p-2.5 bg-stone-50 border border-slate-200 rounded-lg cursor-pointer hover:border-amber-400">
-              <input type="radio" name="pay-method" value="UPI / GPay / PhonePe" checked class="text-gold-500">
-              <span class="font-bold text-slate-800">UPI / GPay / QR</span>
-            </label>
-            <label class="flex items-center gap-2 p-2.5 bg-stone-50 border border-slate-200 rounded-lg cursor-pointer hover:border-amber-400">
-              <input type="radio" name="pay-method" value="Cash On Delivery (COD)" class="text-gold-500">
-              <span class="font-bold text-slate-800">Cash on Delivery</span>
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" class="w-full gold-button py-3 rounded-xl text-xs uppercase tracking-widest font-black shadow-lg">
-          Confirm Order & Generate Invoice
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ORDER SUCCESS MODAL -->
-  <div id="order-success-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-amber-200 rounded-2xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl text-slate-800">
-      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-600 flex items-center justify-center text-3xl mx-auto border border-emerald-500/40">
-        <i class="fa-solid fa-circle-check"></i>
-      </div>
-      <h3 class="font-cinzel text-xl font-bold gold-gradient-text">Order Placed Successfully!</h3>
-      <p class="text-xs text-slate-600 font-medium">Thank you! Your order has been registered. Archers Global Traders will arrange dispatch shortly.</p>
-      
-      <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-left space-y-1">
-        <div class="flex justify-between"><span class="text-slate-500">Order ID:</span><span id="succ-order-id" class="font-mono font-bold text-gold-600">#AGT-0000</span></div>
-        <div class="flex justify-between"><span class="text-slate-500">Total Amount:</span><span id="succ-total" class="font-bold text-amber-900">₹0</span></div>
-      </div>
-
-      <div class="pt-2 space-y-2">
-        <a id="succ-whatsapp-btn" href="#" target="_blank" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
-          <i class="fa-brands fa-whatsapp text-base"></i> Send Order Bill To WhatsApp (+91 89030 26202)
-        </a>
-        <button onclick="closeOrderSuccessModal()" class="w-full bg-stone-100 hover:bg-stone-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">
-          Close Window
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADMIN LOGIN MODAL -->
-  <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-amber-200 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-xs text-slate-800">
-      <div class="text-center mb-4">
-        <img src="logo.jpeg" alt="Archers Medallion" class="w-12 h-12 rounded-full mx-auto border border-gold-400 mb-2 object-cover">
-        <h3 class="font-cinzel text-lg font-bold gold-gradient-text">Staff Authentication</h3>
-        <p class="text-slate-500">Enter credentials to unlock Price Control</p>
-      </div>
-
-      <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="space-y-3">
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Admin Username</label>
-          <input type="text" id="admin-user-input" required placeholder="ARCHERS" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400 uppercase font-mono">
-        </div>
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Password</label>
-          <div class="relative">
-            <input type="password" id="admin-pass-input" required placeholder="••••••••" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:border-gold-400">
-            <button type="button" onclick="togglePassVisibility('admin-pass-input')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600">
-              <i class="fa-solid fa-eye text-xs"></i>
-            </button>
-          </div>
-        </div>
-        <p id="login-error-msg" class="text-red-500 font-semibold text-[11px] hidden text-center"></p>
-
-        <div class="pt-2 flex gap-2">
-          <button type="button" onclick="closeAdminLoginModal()" class="w-1/2 bg-stone-200 hover:bg-stone-300 text-slate-700 py-2.5 rounded-xl font-bold">Cancel</button>
-          <button type="submit" class="w-1/2 gold-button py-2.5 rounded-xl font-bold">Sign In</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ADMIN PRICE CONTROL MODAL -->
-  <div id="price-control-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-amber-300 rounded-2xl max-w-xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto custom-scroll text-xs text-slate-800">
-      <div class="flex justify-between items-center pb-3 border-b border-gold-500/20 mb-4">
-        <div>
-          <h3 class="font-cinzel text-base font-bold gold-gradient-text flex items-center gap-2">
-            <i class="fa-solid fa-tags text-gold-500"></i> Daily 1-KG Rate Editor
-          </h3>
-          <p class="text-slate-500 text-[11px]">Updating 1-Kg price automatically recalculates 100g, 250g, 500g packages.</p>
-        </div>
-        <button onclick="closePriceModal()" class="text-slate-400 hover:text-slate-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-
-      <div id="price-editor-list" class="space-y-3"></div>
-
-      <div class="pt-5 border-t border-gold-500/20 mt-4 flex justify-between items-center">
-        <button onclick="resetDefaultPrices()" class="text-red-500 hover:text-red-700 underline font-semibold text-[11px]">
-          Reset to Flyer Default Rates
-        </button>
-        <div class="flex gap-2">
-          <button onclick="closePriceModal()" class="bg-stone-200 hover:bg-stone-300 text-slate-700 px-4 py-2 rounded-lg font-bold">Close</button>
-          <button onclick="saveNewPrices()" class="gold-button px-5 py-2 rounded-lg font-bold">Save New Rates</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADMIN PASSWORD CHANGE (OTP) MODAL -->
-  <div id="change-pw-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-amber-200 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-xs text-slate-800 space-y-4">
-      <div class="text-center">
-        <h3 class="font-cinzel text-base font-bold gold-gradient-text">Change Password</h3>
-        <p class="text-slate-500 text-[11px] mt-1">OTP will be sent to registered mobile: <span class="text-amber-900 font-bold">+91 89030 26202</span></p>
-      </div>
-
-      <div id="pw-step-1" class="space-y-3">
-        <button onclick="requestOtpForPw()" class="w-full gold-button py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">
-          <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP To Mobile
-        </button>
-      </div>
-
-      <div id="pw-step-2" class="space-y-3 hidden">
-        <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-center font-mono text-[11px]">
-          OTP Sent Successfully! (Demo OTP: <span id="demo-otp-badge" class="font-bold underline">123456</span>)
-        </div>
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Enter 6-Digit OTP</label>
-          <input type="text" id="otp-input" maxlength="6" placeholder="123456" class="w-full bg-stone-50 border border-slate-300 rounded-lg p-2.5 text-center text-base tracking-widest text-slate-800 font-mono">
-        </div>
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">New Password</label>
-          <input type="password" id="new-pw-input" placeholder="Enter new password" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800">
-        </div>
-        <div>
-          <label class="block text-slate-700 font-semibold mb-1">Confirm New Password</label>
-          <input type="password" id="confirm-pw-input" placeholder="Confirm password" class="w-full bg-stone-50 border border-slate-200 rounded-lg p-2.5 text-slate-800">
-        </div>
-        <p id="otp-err-msg" class="text-red-500 text-center hidden font-semibold"></p>
-
-        <div class="flex gap-2">
-          <button onclick="closeChangePwModal()" class="w-1/2 bg-stone-200 hover:bg-stone-300 text-slate-700 py-2 rounded-lg font-bold">Cancel</button>
-          <button onclick="verifyOtpAndChangePw()" class="w-1/2 gold-button py-2 rounded-lg font-bold">Update</button>
-        </div>
+      <div class="p-5 space-y-3">
+        <p class="text-sm text-slate-700">Secure customer sign-in and private order tracking are not enabled yet. We have removed the demo OTP so it will not mislead customers.</p>
+        <p class="text-xs text-slate-500">You can still place an order using Guest Checkout. For help with an existing order, contact Archers Global Traders.</p>
+        <a href="https://wa.me/918903026202" target="_blank" rel="noopener" class="gold-button block text-center py-3 rounded-xl text-sm font-bold">Contact us on WhatsApp</a>
       </div>
     </div>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // Product Images Mapping with exact uploaded ZIP assets
+    // Product image filenames match the supplied images ZIP exactly.
     const ASSETS = {
-      pouch8mm: "cardamom.jpeg",
-      pouchMulti: "cardamom.jpeg",
-      pepperBlack: "pepper.jpeg",
-      pepperWhite: "White Pepper.png",
-      cloves: "clove.jpeg",
-      cinnamonStick: "Cinnamon Rolls.png",
-      starAnise: "Star Anise.png",
-      turmericSalem: "urmeric Fingers.png",
-      cuminJeera: "Cumin Seeds.png",
-      fennelSaunf: "fennel seeds.png",
-      nutmegWhole: "Whole Nutmeg with Shell.png",
-      maceJavithri: "Golden Mace Flower.png",
-      cashewW320: "Whole Cashews.png",
-      cashewSplits: "Whole Cashews.png",
-      honeyRaw: "honey.jpeg"
+      pouch8mm: "cardamom.png", pouchMulti: "cardamom.png", pepperBlack: "pepper.png",
+      pepperWhite: "White Pepper.png", cloves: "clove.png", cinnamonStick: "Cinnamon Rolls.png",
+      starAnise: "Star Anise.png", turmericSalem: "Turmeric Fingers.png", cuminJeera: "Cumin Seeds.png",
+      fennelSaunf: "fennel seeds.png", nutmegWhole: "Whole Nutmeg with Shell.png",
+      maceJavithri: "Golden Mace Flower.png", cashewW320: "Whole Cashews.png",
+      cashewSplits: "Whole Cashews.png", honeyRaw: "honey.png", blackKavuni: "Black Kavuni Rice.png"
     };
 
-    // Catalog Products State
     const DEFAULT_PRODUCTS = [
-      { id: 'cardamom-8mm', name: 'Cardamom 8MM+ (Bold Jumbo)', tamil: 'ஏலக்காய் 8மிமீ+ (பிரீமியம் தரம்)', category: 'cardamom', baseKg: 4500, img: ASSETS.pouch8mm, badge: '8 MM+ BOLD' },
-      { id: 'cardamom-7mm', name: 'Cardamom 7MM (Super Bold)', tamil: 'ஏலக்காய் 7மிமீ (சூப்பர் போல்டு)', category: 'cardamom', baseKg: 4000, img: ASSETS.pouchMulti, badge: '7 MM' },
-      { id: 'cardamom-65mm', name: 'Cardamom 6.5MM (Medium Bold)', tamil: 'ஏலக்காய் 6.5மிமீ (மீடியம் போல்டு)', category: 'cardamom', baseKg: 3900, img: ASSETS.pouchMulti, badge: '6.5 MM' },
-      { id: 'cardamom-6mm', name: 'Cardamom 6MM (Medium)', tamil: 'ஏலக்காய் 6மிமீ (நடுத்தர அளவு)', category: 'cardamom', baseKg: 3800, img: ASSETS.pouchMulti, badge: '6 MM' },
-      { id: 'cardamom-5mm', name: 'Cardamom 5MM (Small Grade)', tamil: 'ஏலக்காய் 5மிமீ (சிறிய அளவு)', category: 'cardamom', baseKg: 3200, img: ASSETS.pouchMulti, badge: '5 MM' },
-      { id: 'black-pepper', name: 'Malabar Black Pepper (கருப்பு மிளகு)', tamil: 'கருப்பு மிளகு (நாட்டு முதல் தரம்)', category: 'spices', baseKg: 800, img: ASSETS.pepperBlack, badge: 'MALABAR BLACK' },
-      { id: 'white-pepper', name: 'Munnar White Pepper (வெள்ளை மிளகு)', tamil: 'சுத்தமான வெள்ளை மிளகு', category: 'spices', baseKg: 1250, img: ASSETS.pepperWhite, badge: 'PURE WHITE' },
-      { id: 'cloves-whole', name: 'Zanzibar Whole Cloves (கிராம்பு)', tamil: 'முதல் தர கிராம்பு (லவங்கம்)', category: 'spices', baseKg: 1050, img: ASSETS.cloves, badge: 'HANDPICKED' },
-      { id: 'cinnamon-bark', name: 'Ceylon Cinnamon Rolls (சுருள் பட்டை)', tamil: 'இயற்கை சுருள் இலவங்கப்பட்டை', category: 'spices', baseKg: 950, img: ASSETS.cinnamonStick, badge: 'CEYLON BARK' },
-      { id: 'star-anise', name: 'Whole Star Anise (அன்னாசிப்பூ)', tamil: 'அன்னாசிப்பூ (முழு மலர் தரம்)', category: 'spices', baseKg: 850, img: ASSETS.starAnise, badge: 'STAR ANISE' },
-      { id: 'turmeric-salem', name: 'Salem Turmeric Fingers (விரலி மஞ்சள்)', tamil: 'சேலம் ஆர்கானிக் விரலி மஞ்சள்', category: 'spices', baseKg: 320, img: ASSETS.turmericSalem, badge: 'SALEM PURE' },
-      { id: 'royal-cumin', name: 'Royal Cumin Seeds (நற்சீரகம்)', tamil: 'நற்சீரகம் (முதல் தர வாசனை)', category: 'spices', baseKg: 550, img: ASSETS.cuminJeera, badge: 'ROYAL JEERA' },
-      { id: 'fennel-seeds', name: 'Lucknowi Fennel Seeds (சோம்பு)', tamil: 'பச்சை பெருஞ்சீரகம் / சோம்பு', category: 'spices', baseKg: 420, img: ASSETS.fennelSaunf, badge: 'SWEET SAUNF' },
-      { id: 'nutmeg-whole', name: 'Whole Nutmeg with Shell (ஜாதிக்காய்)', tamil: 'முழு ஜாதிக்காய் (நாட்டு ரகம்)', category: 'spices', baseKg: 900, img: ASSETS.nutmegWhole, badge: 'WHOLE NUTMEG' },
-      { id: 'mace-flower', name: 'Golden Mace Flower (ஜாதிப்பத்திரி)', tamil: 'தூய ஜாதிப்பத்திரி (வாசனை மலர்)', category: 'spices', baseKg: 2200, img: ASSETS.maceJavithri, badge: 'GOLDEN MACE' },
-      { id: 'whole-cashew', name: 'Premium Whole Cashews W320 (முந்திரி)', tamil: 'முழு முந்திரி பருப்பு (W320 தரம்)', category: 'nuts', baseKg: 1100, img: ASSETS.cashewW320, badge: 'W320 JUMBO' },
-      { id: 'split-cashew', name: 'Premium Split Cashews (முந்திரி பிளவு)', tamil: 'முந்திரி 2-பிளவு பருப்பு (ஸ்வீட்ஸ் தரம்)', category: 'nuts', baseKg: 980, img: ASSETS.cashewSplits, badge: 'SPLITS 2-PIECE' },
-      { id: 'wild-honey', name: 'Pure Forest Wild Honey (மலைத்தேன்)', tamil: '100% இயற்கை மலைத்தேன்', category: 'honey', baseKg: 650, img: ASSETS.honeyRaw, badge: '100% RAW' }
+      { id:'cardamom-8mm', name:'Cardamom 8MM+ Premium', tamil:'ஏலக்காய் 8மிமீ+ (பிரீமியம் தரம்)', category:'cardamom', baseKg:4500, img:ASSETS.pouch8mm, badge:'8MM+ PREMIUM', inStock:true },
+      { id:'cardamom-7mm', name:'Cardamom 7–8MM Premium', tamil:'ஏலக்காய் 7–8மிமீ (பிரீமியம் தரம்)', category:'cardamom', baseKg:4000, img:ASSETS.pouchMulti, badge:'7–8MM PREMIUM', inStock:true },
+      { id:'cardamom-65mm', name:'Cardamom 6–7MM Premium', tamil:'ஏலக்காய் 6–7மிமீ (பிரீமியம் தரம்)', category:'cardamom', baseKg:3900, img:ASSETS.pouchMulti, badge:'6–7MM PREMIUM', inStock:true },
+      { id:'black-pepper', name:'Premium Black Pepper', tamil:'கருப்பு மிளகு (நாட்டு முதல் தரம்)', category:'spices', baseKg:800, img:ASSETS.pepperBlack, badge:'PREMIUM BLACK PEPPER', inStock:true },
+      { id:'white-pepper', name:'Premium White Pepper', tamil:'சுத்தமான வெள்ளை மிளகு', category:'spices', baseKg:1250, img:ASSETS.pepperWhite, badge:'PURE WHITE', inStock:true },
+      { id:'cloves-whole', name:'Premium Whole Cloves', tamil:'முதல் தர கிராம்பு (லவங்கம்)', category:'spices', baseKg:1050, img:ASSETS.cloves, badge:'HANDPICKED', inStock:true },
+      { id:'cinnamon-bark', name:'Premium Cinnamon Rolls', tamil:'இயற்கை சுருள் இலவங்கப்பட்டை', category:'spices', baseKg:950, img:ASSETS.cinnamonStick, badge:'PREMIUM CINNAMON', inStock:true },
+      { id:'star-anise', name:'Whole Star Anise', tamil:'அன்னாசிப்பூ (முழு மலர் தரம்)', category:'spices', baseKg:850, img:ASSETS.starAnise, badge:'STAR ANISE', inStock:true },
+      { id:'turmeric-salem', name:'Premium Turmeric Fingers', tamil:'பிரீமியம் விரலி மஞ்சள்', category:'spices', baseKg:320, img:ASSETS.turmericSalem, badge:'PREMIUM TURMERIC', inStock:true },
+      { id:'royal-cumin', name:'Premium Cumin Seeds', tamil:'நற்சீரகம் (முதல் தர வாசனை)', category:'spices', baseKg:550, img:ASSETS.cuminJeera, badge:'PREMIUM CUMIN', inStock:true },
+      { id:'fennel-seeds', name:'Premium Fennel Seeds', tamil:'பச்சை பெருஞ்சீரகம் / சோம்பு', category:'spices', baseKg:420, img:ASSETS.fennelSaunf, badge:'PREMIUM FENNEL', inStock:true },
+      { id:'nutmeg-whole', name:'Whole Nutmeg with Shell', tamil:'முழு ஜாதிக்காய் (நாட்டு ரகம்)', category:'spices', baseKg:900, img:ASSETS.nutmegWhole, badge:'WHOLE NUTMEG', inStock:true },
+      { id:'mace-flower', name:'Golden Mace Flower', tamil:'தூய ஜாதிப்பத்திரி (வாசனை மலர்)', category:'spices', baseKg:2200, img:ASSETS.maceJavithri, badge:'GOLDEN MACE', inStock:true },
+      { id:'whole-cashew', name:'Premium Whole Cashews W320', tamil:'முழு முந்திரி பருப்பு (W320 தரம்)', category:'nuts', baseKg:1100, img:ASSETS.cashewW320, badge:'W320 JUMBO', inStock:true },
+      { id:'split-cashew', name:'Premium Split Cashews', tamil:'முந்திரி 2-பிளவு பருப்பு (ஸ்வீட்ஸ் தரம்)', category:'nuts', baseKg:980, img:ASSETS.cashewSplits, badge:'SPLITS 2-PIECE', inStock:true },
+      { id:'wild-honey', name:'Pure Forest Wild Honey', tamil:'100% இயற்கை மலைத்தேன்', category:'honey', baseKg:650, img:ASSETS.honeyRaw, badge:'100% RAW', inStock:true },
+      { id:'black-kavuni-rice', name:'Black Kavuni Rice (Traditional Black Rice)', tamil:'கருப்பு கவுனி அரிசி', category:'rice', baseKg:0, img:ASSETS.blackKavuni, badge:'TRADITIONAL RICE', inStock:true }
     ];
 
-    let products = JSON.parse(localStorage.getItem('agt_products')) || DEFAULT_PRODUCTS;
-    // Correct old cached image paths while preserving saved product details and prices.
-    products = products.map(p => ({ ...p, img: (DEFAULT_PRODUCTS.find(d => d.id === p.id)?.img || p.img) }));
-    localStorage.setItem('agt_products', JSON.stringify(products));
+    let products = DEFAULT_PRODUCTS.map(p => ({...p}));
     let cart = JSON.parse(localStorage.getItem('agt_cart')) || [];
-    let isAdminLoggedIn = false;
     let selectedWeights = {};
     let currentGeneratedOtp = null;
     let currentLoginOtp = null;
+    const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbzN8Q26fDCPsLQBFTb0_qDFvcB0e7Rvh3MlP-WpmhxA7CH0DP0HzUbvy_Ois4k5KiQE9g/exec';
 
-    const ADMIN_CREDENTIALS = {
-      user: 'ARCHERS',
-      pass: localStorage.getItem('agt_admin_pw') || 'SPICES@007',
-      mobile: '+91 89030 26202'
-    };
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-navigation-menu');
+      const button = document.getElementById('mobile-menu-toggle');
+      const icon = document.getElementById('mobile-menu-icon');
+      if (!menu || !button || !icon) return;
+      const opening = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !opening);
+      button.setAttribute('aria-expanded', String(opening));
+      icon.className = opening ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-navigation-menu');
+      const button = document.getElementById('mobile-menu-toggle');
+      const icon = document.getElementById('mobile-menu-icon');
+      if (menu) menu.classList.add('hidden');
+      if (button) button.setAttribute('aria-expanded', 'false');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    }
 
     function initCatalog() {
       products.forEach(p => { if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000; });
-      renderProducts(products);
-      renderTickerRates();
-      updateCartUI();
+      renderProducts(products); renderTickerRates(); updateCartUI();
+      loadPublicProducts();
+    }
+
+    function loadPublicProducts() {
+      if (!ORDER_API_URL) return;
+      window.handlePublicProducts = function(data) {
+        if (!data || !Array.isArray(data.products) || !data.products.length) return;
+        const remote = new Map(data.products.map(p => [String(p.id), p]));
+        products = DEFAULT_PRODUCTS.map(seed => {
+          const p = remote.get(seed.id);
+          return p ? {...seed, baseKg:Number(p.baseKg||0), inStock:p.inStock !== false, img:seed.img} : {...seed};
+        });
+        products.forEach(p => { if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000; });
+        renderProducts(products); renderTickerRates();
+      };
+      const script = document.createElement('script');
+      script.src = ORDER_API_URL + '?action=listProducts&callback=handlePublicProducts&v=' + Date.now();
+      script.onerror = () => console.warn('Could not load the live product price/stock list; showing default catalogue.');
+      document.head.appendChild(script);
     }
 
     function englishProductName(name) {
@@ -668,14 +417,15 @@
       const grid = document.getElementById('products-grid');
       grid.innerHTML = items.map(p => {
         const activeWeight = selectedWeights[p.id] || 1000;
-        const currentPrice = Math.round(p.baseKg * (activeWeight / 1000));
+        const currentPrice = Math.round(Number(p.baseKg || 0) * (activeWeight / 1000));
+        const outOfStock = p.inStock === false;
+        const hasPrice = Number(p.baseKg || 0) > 0;
         return `
           <div class="bg-white border border-amber-100 hover:border-amber-400 rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col group">
             <div class="relative h-60 bg-stone-50 overflow-hidden flex items-center justify-center p-3 border-b border-amber-50">
               <img src="${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg">
-              <span class="absolute top-3 left-3 bg-white/95 border border-amber-300 text-amber-900 font-cinzel text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
-                ${p.badge}
-              </span>
+              <span class="absolute top-3 left-3 bg-white/95 border border-amber-300 text-amber-900 font-cinzel text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">${p.badge}</span>
+              ${outOfStock ? '<span class="absolute inset-0 bg-slate-900/45 flex items-center justify-center"><span class="bg-red-700 text-white text-xs font-extrabold tracking-wider px-4 py-2 rounded-full shadow-lg">OUT OF STOCK</span></span>' : ''}
             </div>
             <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
               <div>
@@ -698,10 +448,10 @@
               <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <span class="text-[10px] text-slate-400 block font-medium">Pack Price:</span>
-                  <span class="font-cinzel text-lg font-black text-amber-900">₹${currentPrice.toLocaleString('en-IN')}</span>
+                  <span class="font-cinzel text-lg font-black text-amber-900">${hasPrice ? '₹' + currentPrice.toLocaleString('en-IN') : 'Price on request'}</span>
                 </div>
-                <button onclick="addToCart('${p.id}')" class="gold-button px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
-                  <i class="fa-solid fa-cart-plus text-xs"></i> Add
+                <button onclick="addToCart('${p.id}')" ${outOfStock || !hasPrice ? 'disabled' : ''} class="${outOfStock || !hasPrice ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'gold-button'} px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
+                  <i class="fa-solid ${outOfStock ? 'fa-ban' : 'fa-cart-plus'} text-xs"></i> ${outOfStock ? 'Unavailable' : (!hasPrice ? 'Price Soon' : 'Add')}
                 </button>
               </div>
             </div>
@@ -720,13 +470,16 @@
       container.innerHTML = products.map(p => `
         <span class="inline-flex items-center gap-1.5">
           <span class="text-slate-500">${p.badge}:</span>
-          <span class="font-extrabold text-amber-900">₹${p.baseKg.toLocaleString('en-IN')}/Kg</span>
+          <span class="font-extrabold text-amber-900">${Number(p.baseKg)>0 ? '₹'+Number(p.baseKg).toLocaleString('en-IN')+'/Kg' : 'Price on request'}</span>
+          ${p.inStock === false ? '<span class="text-red-700 font-bold">Out of Stock</span>' : ''}
         </span>
       `).join(' • ');
     }
 
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
+      if (!product || product.inStock === false) return alert('This product is currently out of stock.');
+      if (!(Number(product.baseKg) > 0)) return alert('Price for this product will be announced soon. Please contact us on WhatsApp.');
       const weight = selectedWeights[productId] || 1000;
       const unitPrice = Math.round(product.baseKg * (weight / 1000));
       const existing = cart.find(item => item.id === productId && item.weight === weight);
@@ -866,30 +619,69 @@
       document.getElementById('checkout-modal').classList.add('hidden');
     }
 
-    function handlePlaceOrder(e) {
+    async function handlePlaceOrder(e) {
       e.preventDefault();
-      const orderId = 'AGT-' + Math.floor(100000 + Math.random() * 900000);
-      const name = document.getElementById('cust-name').value;
-      const phone = document.getElementById('cust-phone').value;
-      const pin = document.getElementById('cust-pin').value;
-      const address = document.getElementById('cust-address').value;
-      const payMethod = document.querySelector('input[name="pay-method"]:checked').value;
+      if (!cart.length) return alert('Your cart is empty!');
+      const unavailable = cart.find(i => { const p=products.find(x=>x.id===i.id); return !p || p.inStock===false || !(Number(p.baseKg)>0) || Math.round(Number(p.baseKg)*(i.weight/1000))!==Number(i.price); });
+      if (unavailable) { alert('A product price or stock status has changed. Please refresh the catalogue and check your cart again.'); loadPublicProducts(); return; }
+      const orderId = 'AGT-' + Date.now().toString().slice(-8);
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const email = document.getElementById('cust-email').value.trim();
+      const pin = document.getElementById('cust-pin').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const payMethodEl = document.querySelector('input[name="pay-method"]:checked');
+      const payMethod = payMethodEl ? payMethodEl.value : 'Not selected';
       const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       const delivery = subtotal >= 1000 ? 0 : 50;
       const grandTotal = subtotal + delivery;
+      const items = cart.map(i => ({
+        id: i.id, name: englishProductName(i.name), weight: i.weight === 1000 ? '1Kg' : `${i.weight}g`,
+        quantity: i.qty, unitPrice: i.price, lineTotal: i.price * i.qty
+      }));
+      const order = {
+        orderId, createdAt: new Date().toISOString(), customerName: name, phone, email,
+        pincode: pin, address, paymentMethod: payMethod, paymentStatus: 'Pending',
+        orderStatus: 'Pending', items, subtotal, deliveryFee: delivery, total: grandTotal
+      };
 
-      let msg = `*NEW SPICE ORDER - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A`;
-      msg += `*Order ID:* #${orderId}%0A`;
-      msg += `*Customer:* ${name} (${phone})%0A`;
-      msg += `*Address:* ${address}, Pincode: ${pin}%0A`;
-      msg += `*Payment:* ${payMethod}%0A%0A`;
-      msg += `*ITEMS ORDERED:*%0A`;
-      cart.forEach((i, idx) => {
-        msg += `${idx + 1}. ${i.name} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}%0A`;
-      });
-      msg += `%0A*Total Amount:* ₹${grandTotal}%0A`;
+      // Local browser copy is only a fallback; it is not a shared or secure order database.
+      try {
+        const localOrders = JSON.parse(localStorage.getItem('agt_local_orders') || '[]');
+        localOrders.push(order);
+        localStorage.setItem('agt_local_orders', JSON.stringify(localOrders));
+      } catch (err) { console.warn('Could not save local order copy.', err); }
 
-      const waUrl = `https://wa.me/918903026202?text=${msg}`;
+      // The backend must be deployed by the site owner before this can write to Google Sheets.
+      if (ORDER_API_URL.trim()) {
+        try {
+          await fetch(ORDER_API_URL, {
+            method: 'POST', mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'newOrder', order })
+          });
+        } catch (err) {
+          console.error('Google Sheets order submission failed.', err);
+          alert('Your WhatsApp order message is ready, but the online order register may not have received it. Please contact us if needed.');
+        }
+      }
+
+      const lines = [
+        '*NEW SPICE ORDER - ARCHERS GLOBAL TRADERS*',
+        `*Order ID:* #${orderId}`,
+        `*Customer:* ${name}`,
+        `*Mobile:* ${phone}`,
+        `*Email:* ${email || 'Not provided'}`,
+        `*Address:* ${address}`,
+        `*Pincode:* ${pin}`,
+        `*Payment:* ${payMethod}`,
+        '', '*ITEMS ORDERED:*',
+        ...items.map((item, idx) => `${idx + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.lineTotal}`),
+        '', `*Subtotal:* ₹${subtotal}`, `*Delivery:* ${delivery === 0 ? 'FREE' : '₹' + delivery}`,
+        `*Total Amount:* ₹${grandTotal}`,
+        '', '*Please confirm this order.*'
+      ];
+      const waUrl = `https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`;
       document.getElementById('succ-whatsapp-btn').href = waUrl;
       document.getElementById('succ-order-id').innerText = '#' + orderId;
       document.getElementById('succ-total').innerText = '₹' + grandTotal.toLocaleString('en-IN');
@@ -897,7 +689,6 @@
       cart = [];
       saveCart();
       updateCartUI();
-
       closeCheckoutModal();
       document.getElementById('order-success-modal').classList.remove('hidden');
     }
@@ -909,82 +700,30 @@
     function sendQuickWhatsAppOrder() {
       if (cart.length === 0) return alert('Cart is empty!');
       const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-      let msg = `*QUICK ORDER INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*%0A`;
-      cart.forEach((i, idx) => {
-        msg += `${idx + 1}. ${i.name} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}%0A`;
-      });
-      msg += `%0A*Cart Total:* ₹${subtotal}%0APlease confirm delivery time.`;
-      window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
+      const lines = [
+        '*QUICK ORDER INQUIRY - ARCHERS GLOBAL TRADERS (Arikrishnan & Co)*',
+        ...cart.map((i, idx) => `${idx + 1}. ${englishProductName(i.name)} (${i.weight === 1000 ? '1Kg' : i.weight + 'g'}) x ${i.qty} = ₹${i.price * i.qty}`),
+        '', `*Cart Total:* ₹${subtotal}`, 'Please confirm availability and delivery time.'
+      ];
+      window.open(`https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
     }
 
     function openAccountModal() {
       const modal = document.getElementById('account-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
-      const savedMobile = localStorage.getItem('agt_customer_mobile');
-      if (savedMobile) showAccountPanel(savedMobile);
-      else resetAccountModal();
     }
 
     function closeAccountModal() {
       const modal = document.getElementById('account-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      modal.classList.add('hidden'); modal.classList.remove('flex');
     }
-
-    function resetAccountModal() {
-      document.getElementById('account-login-step').classList.remove('hidden');
-      document.getElementById('account-otp-step').classList.add('hidden');
-      document.getElementById('account-panel').classList.add('hidden');
-      document.getElementById('account-mobile').value = '';
-    }
-
-    function requestAccountOtp() {
-      const mobile = document.getElementById('account-mobile').value.trim();
-      const msgEl = document.getElementById('account-login-message');
-
-      if (mobile.length !== 10) {
-        msgEl.innerText = 'Please enter a valid 10-digit mobile number.';
-        msgEl.classList.remove('hidden');
-        return;
-      }
-
-      currentLoginOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      msgEl.classList.add('hidden');
-
-      document.getElementById('account-demo-otp').innerText = currentLoginOtp;
-      document.getElementById('account-login-step').classList.add('hidden');
-      document.getElementById('account-otp-step').classList.remove('hidden');
-    }
-
-    function verifyAccountOtp() {
-      const enteredOtp = document.getElementById('account-otp').value.trim();
-      const mobile = document.getElementById('account-mobile').value.trim();
-
-      if (enteredOtp === currentLoginOtp) {
-        localStorage.setItem('agt_customer_mobile', mobile);
-        showAccountPanel(mobile);
-      } else {
-        alert('Incorrect OTP entered! Please check the demo OTP code displayed above.');
-      }
-    }
-
-    function showAccountPanel(mobile) {
-      document.getElementById('account-login-step').classList.add('hidden');
-      document.getElementById('account-otp-step').classList.add('hidden');
-      document.getElementById('account-panel').classList.remove('hidden');
-      document.getElementById('account-mobile-display').innerText = '+91 ' + mobile;
-    }
-
-    function backToAccountMobile() {
-      document.getElementById('account-otp-step').classList.add('hidden');
-      document.getElementById('account-login-step').classList.remove('hidden');
-    }
-
-    function accountLogout() {
-      localStorage.removeItem('agt_customer_mobile');
-      resetAccountModal();
-    }
+    function resetAccountModal() { closeAccountModal(); }
+    function requestAccountOtp() { alert('Secure customer login is not enabled yet. Please use Guest Checkout.'); }
+    function verifyAccountOtp() { alert('Demo OTP login has been disabled for security.'); }
+    function showAccountPanel() {}
+    function backToAccountMobile() {}
+    function accountLogout() { closeAccountModal(); }
 
     function openVisitorsModal() {
       const modal = document.getElementById('visitors-modal');
@@ -1014,149 +753,16 @@
       window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
     }
 
-    function handleAdminPortalClick() {
-      if (isAdminLoggedIn) {
-        openPriceModal();
-      } else {
-        document.getElementById('admin-login-modal').classList.remove('hidden');
-      }
-    }
-
-    function closeAdminLoginModal() {
-      document.getElementById('admin-login-modal').classList.add('hidden');
-      document.getElementById('login-error-msg').classList.add('hidden');
-    }
-
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('admin-user-input').value.trim().toUpperCase();
-      const p = document.getElementById('admin-pass-input').value.trim();
-      const currentPw = localStorage.getItem('agt_admin_pw') || ADMIN_CREDENTIALS.pass;
-
-      if (u === ADMIN_CREDENTIALS.user && p === currentPw) {
-        isAdminLoggedIn = true;
-        closeAdminLoginModal();
-        document.getElementById('admin-bar').classList.remove('hidden');
-        openPriceModal();
-      } else {
-        const err = document.getElementById('login-error-msg');
-        err.innerText = 'Invalid Admin credentials!';
-        err.classList.remove('hidden');
-      }
-    }
-
-    function adminLogout() {
-      isAdminLoggedIn = false;
-      document.getElementById('admin-bar').classList.add('hidden');
-      closePriceModal();
-      closeChangePwModal();
-      alert('Admin logged out successfully.');
-    }
-
-    function openPriceModal() {
-      if (!isAdminLoggedIn) return handleAdminPortalClick();
-      const container = document.getElementById('price-editor-list');
-      container.innerHTML = products.map((p, idx) => `
-        <div class="bg-stone-50 p-2.5 rounded-lg border border-slate-200 flex items-center justify-between gap-3">
-          <div class="flex-1">
-            <span class="font-bold text-slate-800">${englishProductName(p.name)}</span>
-            <span class="text-[10px] text-slate-400 block">${p.badge}</span>
-          </div>
-          <div class="flex items-center gap-1.5 w-32">
-            <span class="text-amber-600 font-bold">₹</span>
-            <input type="number" id="price-input-${idx}" value="${p.baseKg}" class="w-full bg-white border border-amber-300 rounded p-1.5 text-right font-bold text-slate-900">
-            <span class="text-slate-400 text-[11px]">/Kg</span>
-          </div>
-        </div>
-      `).join('');
-      document.getElementById('price-control-modal').classList.remove('hidden');
-    }
-
-    function closePriceModal() {
-      document.getElementById('price-control-modal').classList.add('hidden');
-    }
-
-    function saveNewPrices() {
-      products.forEach((p, idx) => {
-        const val = parseFloat(document.getElementById(`price-input-${idx}`).value);
-        if (!isNaN(val) && val > 0) p.baseKg = val;
-      });
-      localStorage.setItem('agt_products', JSON.stringify(products));
-      renderProducts(products);
-      renderTickerRates();
-      updateCartUI();
-      closePriceModal();
-      alert('New Spot Prices Saved Successfully! All catalog packs updated.');
-    }
-
-    function resetDefaultPrices() {
-      if (confirm('Reset all prices back to flyer default rates?')) {
-        products = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-        localStorage.setItem('agt_products', JSON.stringify(products));
-        renderProducts(products);
-        renderTickerRates();
-        updateCartUI();
-        closePriceModal();
-      }
-    }
-
-    function openChangePwModal() {
-      if (!isAdminLoggedIn) return handleAdminPortalClick();
-      document.getElementById('pw-step-1').classList.remove('hidden');
-      document.getElementById('pw-step-2').classList.add('hidden');
-      document.getElementById('change-pw-modal').classList.remove('hidden');
-    }
-
-    function closeChangePwModal() {
-      document.getElementById('change-pw-modal').classList.add('hidden');
-    }
-
-    function requestOtpForPw() {
-      currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      document.getElementById('demo-otp-badge').innerText = currentGeneratedOtp;
-      document.getElementById('pw-step-1').classList.add('hidden');
-      document.getElementById('pw-step-2').classList.remove('hidden');
-    }
-
-    function verifyOtpAndChangePw() {
-      const enteredOtp = document.getElementById('otp-input').value.trim();
-      const newPw = document.getElementById('new-pw-input').value.trim();
-      const confirmPw = document.getElementById('confirm-pw-input').value.trim();
-      const err = document.getElementById('otp-err-msg');
-
-      if (enteredOtp !== currentGeneratedOtp) {
-        err.innerText = 'Incorrect OTP entered!';
-        err.classList.remove('hidden');
-        return;
-      }
-      if (!newPw || newPw.length < 6) {
-        err.innerText = 'Password must be at least 6 characters!';
-        err.classList.remove('hidden');
-        return;
-      }
-      if (newPw !== confirmPw) {
-        err.innerText = 'Passwords do not match!';
-        err.classList.remove('hidden');
-        return;
-      }
-
-      localStorage.setItem('agt_admin_pw', newPw);
-      ADMIN_CREDENTIALS.pass = newPw;
-      alert('Password changed successfully! Keep it confidential.');
-      closeChangePwModal();
-    }
-
-    function togglePassVisibility(id) {
-      const el = document.getElementById(id);
-      el.type = el.type === 'password' ? 'text' : 'password';
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if (e.altKey && (e.key === 'a' || e.key === 'A')) {
-        e.preventDefault();
-        handleAdminPortalClick();
-      }
-    });
+    // Price and stock are managed only in the private Admin Dashboard.
+    function handleAdminPortalClick() { alert('Admin tools are available only through the private Admin Dashboard.'); }
+    function openPriceModal() { handleAdminPortalClick(); }
+    function closePriceModal() {}
+    function openChangePwModal() { handleAdminPortalClick(); }
+    function closeChangePwModal() {}
+    function adminLogout() {}
+    function requestOtpForPw() {}
+    function verifyOtpAndChangePw() {}
+    function handleAdminLogin(e) { if (e) e.preventDefault(); }
 
     window.onload = initCatalog;
   </script>
