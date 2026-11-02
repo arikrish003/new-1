@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Archers Global Traders supplies premium spices, nuts and honey for wholesale and retail orders in India.">
   <meta name="theme-color" content="#ffffff">
-  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
   <title>Archers Global Traders | Wholesale & Retail Pure Spices</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,6 +29,9 @@
     }
   </script>
   <style>
+/* Current page indicator */
+.agt-current-page{background:#f8f1dc!important;border-bottom:3px solid #d9a52e!important;border-radius:999px;color:#073d2c!important;font-weight:800!important}
+
     body { background-color: #fcfbf9; color: #1e293b; font-family: 'Plus Jakarta Sans', 'Mukta Malar', sans-serif; }
     .gold-gradient-text {
       background: linear-gradient(135deg, #5c2c06 0%, #854d0e 30%, #b45309 60%, #78350f 100%);
@@ -50,7 +53,80 @@
     .custom-scroll::-webkit-scrollbar { width: 6px; }
     .custom-scroll::-webkit-scrollbar-track { background: #1a0e07; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 4px; }
+    .hero-slide { transition: opacity .65s ease; }
+    .hero-slide.is-active { opacity: 1; pointer-events: auto; }
+    .hero-dot { width: 9px; height: 9px; border-radius: 9999px; background: rgba(255,255,255,.8); border: 1px solid rgba(20,48,26,.55); box-shadow: 0 1px 4px #0002; }
+    .hero-dot.active { width: 25px; background: #14532d; border-color: #14532d; }
+    .category-chip { border: 1px solid #ead9b7; background: white; color: #493522; transition: all .2s ease; }
+    .category-chip:hover, .category-chip.active { background: #14532d; color: white; border-color: #14532d; box-shadow: 0 4px 12px #14532d22; }
+    @media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
   </style>
+
+  <style id="archers-hero-layout-fix">
+    /* Full-width, compact promotional slides; use supplied artwork without duplicate overlay text. */
+    #hero-slider { width:100%; max-width:none; margin:0; background:#f7f0df; }
+    #hero-slider > div:first-child { height:clamp(250px, 25vw, 430px); min-height:0 !important; max-height:430px; }
+    #hero-slider .hero-slide { height:100%; width:100%; }
+    #hero-slider .hero-slide > img { width:100% !important; height:100% !important; inset:0; object-fit:contain !important; object-position:center center; background:#f7f0df; }
+    #hero-slider .hero-slide > div:not(.hero-dot) { display:none !important; }
+    #hero-slider .hero-dot { position:relative; z-index:20; }
+    #hero-slider button { z-index:30; }
+    @media (max-width:640px) { #hero-slider > div:first-child { height:clamp(190px, 52vw, 300px); } }
+  </style>
+
+<style id="agt-five-slide-css">
+#hero-slider.agt-hero{width:100%;overflow:hidden;background:linear-gradient(110deg,#fffaf0,#f4ead6 60%,#eee0c4);color:#2c2114}
+#hero-slider .agt-stage{position:relative;height:clamp(320px,34vw,440px);overflow:hidden}
+#hero-slider .agt-slide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(18px,4vw,56px);padding:clamp(24px,5vw,64px) clamp(34px,7vw,96px) 48px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease;background:linear-gradient(110deg,#fffaf0,#f6eddd 60%,#eee0c4)}
+#hero-slider .agt-slide.is-active{opacity:1;visibility:visible;pointer-events:auto}
+#hero-slider .agt-copy{min-width:0;max-width:600px}
+#hero-slider .agt-eyebrow{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#98601b}
+#hero-slider .agt-slide h1,#hero-slider .agt-slide h2{margin:0;font-family:Georgia,'Times New Roman',serif;font-weight:800;font-size:clamp(30px,4vw,56px);line-height:1.08;color:#2b1b0d;overflow-wrap:anywhere}
+#hero-slider .agt-slide h1 span,#hero-slider .agt-slide h2 span{color:#155438}
+#hero-slider .agt-tagline{margin:14px 0 0;font-weight:800;font-size:clamp(12px,1.2vw,16px);letter-spacing:.08em;color:#155438}
+#hero-slider .agt-subtitle{margin:10px 0 0;font:700 clamp(10px,.95vw,13px)/1.5 Georgia,serif;letter-spacing:.15em;color:#80551d}
+#hero-slider .agt-desc{margin:14px 0 0;max-width:48ch;font-size:clamp(14px,1.2vw,18px);line-height:1.55;color:#594632}
+#hero-slider .agt-points{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;color:#155438;font-size:12px;font-weight:750}
+#hero-slider .agt-points span:before{content:'✦';color:#b7802b;margin-right:6px}
+#hero-slider .agt-btn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:12px 20px;border-radius:999px;background:#b7802b;color:#fff!important;text-decoration:none;font-size:14px;font-weight:800;box-shadow:0 4px 12px #8b5c201f;transition:transform .18s ease,background .18s ease}
+#hero-slider .agt-btn:hover{background:#155438;transform:translateY(-1px)}
+#hero-slider .agt-visual{height:100%;min-width:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:18px}
+#hero-slider .agt-visual img{display:block;width:100%;height:100%;max-height:300px;object-fit:contain;object-position:center}
+#hero-slider .agt-slide:not(:first-child) .agt-visual img{border-radius:14px}
+#hero-slider .agt-logo img{width:min(100%,300px);height:auto;max-height:300px;aspect-ratio:1;object-fit:cover;object-position:center;border-radius:50%;background:#071d38;border:5px solid #c18a2e;box-shadow:0 12px 28px #76501e2e}
+#hero-slider .agt-arrow{position:absolute;z-index:5;top:50%;transform:translateY(-50%);width:36px;height:36px;border:1px solid #dfd0b5;border-radius:50%;background:#fffdf8;color:#155438;font-size:26px;line-height:1;cursor:pointer;box-shadow:0 2px 8px #49331a10}
+#hero-slider .agt-prev{left:10px}#hero-slider .agt-next{right:10px}
+#hero-slider .agt-dots{position:absolute;z-index:5;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:9px}
+#hero-slider .agt-dots .hero-dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:#cbb99b;cursor:pointer}
+#hero-slider .agt-dots .hero-dot.active{background:#155438;transform:scale(1.2)}
+@media(max-width:700px){#hero-slider .agt-stage{height:clamp(440px,122vw,560px)}#hero-slider .agt-slide{grid-template-columns:1fr;grid-template-rows:auto minmax(110px,145px);gap:10px;padding:24px 38px 44px;text-align:center;align-content:center}#hero-slider .agt-copy{margin:auto;width:100%}#hero-slider .agt-slide h1,#hero-slider .agt-slide h2{font-size:clamp(28px,8vw,39px)}#hero-slider .agt-tagline{font-size:11px;line-height:1.5}#hero-slider .agt-subtitle{font-size:10px}#hero-slider .agt-desc{font-size:14px;margin-top:9px;line-height:1.45}#hero-slider .agt-points{justify-content:center;gap:6px 12px;font-size:10px;margin-top:9px}#hero-slider .agt-btn{margin-top:12px;padding:10px 16px;font-size:13px}#hero-slider .agt-visual{height:145px;max-height:145px}#hero-slider .agt-visual img{max-height:145px}#hero-slider .agt-logo img{max-height:135px;width:135px}#hero-slider .agt-arrow{width:31px;height:31px;font-size:23px}}
+@media(prefers-reduced-motion:reduce){#hero-slider .agt-slide,#hero-slider .agt-btn{transition:none}}
+
+/* Supplied full-width banner slides: no duplicate text or image-embedded buttons */
+#hero-slider.agt-hero{background:#fff8e9;overflow:hidden;width:100%;}
+#hero-slider .agt-stage{position:relative;width:100%;height:auto;aspect-ratio:2/1;max-height:680px;overflow:hidden;background:#fff8e9;}
+#hero-slider .agt-slide{position:absolute;inset:0;display:block;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease;}
+#hero-slider .agt-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;}
+#hero-slider .agt-banner{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#fff8e9;border:0;border-radius:0;}
+#hero-slider .agt-arrow{position:absolute;z-index:6;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid rgba(184,128,42,.45);background:rgba(255,252,244,.92);color:#075436;font-size:28px;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 10px rgba(44,33,20,.08);}
+#hero-slider .agt-prev{left:14px;} #hero-slider .agt-next{right:14px;}
+#hero-slider .agt-dots{position:absolute;z-index:7;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:9px;padding:7px 11px;border-radius:20px;background:rgba(255,250,239,.78);}
+#hero-slider .agt-dots .hero-dot{width:9px;height:9px;min-width:9px;padding:0;border:0;border-radius:50%;background:#cbb99b;cursor:pointer;}
+#hero-slider .agt-dots .hero-dot.active{background:#155438;transform:scale(1.2);}
+@media(max-width:700px){#hero-slider .agt-stage{height:auto;aspect-ratio:2/1;max-height:none;}#hero-slider .agt-arrow{width:32px;height:32px;font-size:23px;}#hero-slider .agt-prev{left:5px;}#hero-slider .agt-next{right:5px;}#hero-slider .agt-dots{bottom:5px;gap:6px;padding:5px 8px;}#hero-slider .agt-dots .hero-dot{width:7px;height:7px;min-width:7px;}}
+@media(prefers-reduced-motion:reduce){#hero-slider .agt-slide{transition:none;}}
+</style>
+
+<style id="agt-slider-motion-fix">
+/* AGT slider: horizontal sliding motion + genuinely clickable banner images */
+#hero-slider .agt-slide{transform:translateX(100%);opacity:1;visibility:visible;z-index:1;transition:transform .68s cubic-bezier(.22,.75,.25,1);pointer-events:none;}
+#hero-slider .agt-slide.is-active{transform:translateX(0);opacity:1;visibility:visible;z-index:2;pointer-events:auto;}
+#hero-slider .agt-banner-link{display:block;width:100%;height:100%;cursor:pointer;outline-offset:-5px;}
+#hero-slider .agt-banner-link:focus-visible{outline:3px solid #b7802b;}
+#hero-slider .agt-banner{user-select:none;-webkit-user-drag:none;}
+@media(prefers-reduced-motion:reduce){#hero-slider .agt-slide{transition:none!important;}}
+</style>
+
 </head>
 <body class="bg-[#fcfbf9] text-slate-800 min-h-screen flex flex-col selection:bg-gold-500 selection:text-white">
 
@@ -72,9 +148,9 @@
     <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-4">
       
       <!-- BRAND & LOGO -->
-      <a href="#" class="flex items-center gap-3 group">
+      <a href="index.html" class="flex items-center gap-3 group">
         <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full p-0.5 bg-gradient-to-tr from-gold-600 via-yellow-300 to-gold-700 shadow-xl group-hover:scale-105 transition-transform duration-300">
-          <img src="logo.jpeg" alt="Archers Global Traders Official Emblem" class="w-full h-full object-cover rounded-full">
+          <img src="assets/logo.png" alt="Archers Global Traders Official Emblem" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
           <span class="block font-cinzel text-lg sm:text-2xl font-extrabold tracking-wider gold-gradient-text leading-tight">ARCHERS</span>
@@ -93,7 +169,7 @@
 
       <!-- HEADER ACTIONS -->
       <div class="flex items-center gap-3">
-        <a href="https://wa.me/918903026202" target="_blank" class="hidden lg:flex items-center gap-2 bg-emerald-900/40 border border-emerald-500/40 hover:bg-emerald-800/50 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-semibold transition">
+        <a href="https://wa.me/918903026202?text=Hello%20Archers%20Global%20Traders%2C%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener" aria-label="Direct Order on WhatsApp" class="hidden lg:flex items-center gap-2 bg-amber-50 border border-amber-300 hover:bg-amber-100 text-emerald-900 px-3 py-1.5 rounded-full text-xs font-semibold transition">
           <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
           <span>Direct Order</span>
         </a>
@@ -122,61 +198,56 @@
         </button>
       </div>
       <div class="max-w-7xl mx-auto px-4 py-2 hidden sm:flex items-center justify-center gap-2 sm:gap-4 whitespace-nowrap">
-        <a href="#" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Home</a>
-        <a href="#catalog" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Products</a>
-        <button type="button" onclick="openAboutModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">About Us</button>
-        <a href="#quality" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Quality</a>
-        <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Bulk Orders</a>
-        <button type="button" onclick="openVisitorsModal()" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Visitors</button>
-        <a href="#contact" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Contact Us</a>
+        <a href="index.html" aria-current="page" class="agt-current-page px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Home</a>
+        <a href="products.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Products</a>
+        <a href="about.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">About Us</a>
+        <a href="quality.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Quality</a>
+        <a href="bulk-orders.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Bulk Orders</a>
+        <a href="visitors.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Visitors</a>
+        <a href="contact.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Contact Us</a>
+        <a href="login.html" class="px-2.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-700 hover:text-amber-900 hover:bg-amber-50 transition">Login / Track</a>
       </div>
       <div id="mobile-navigation-menu" class="hidden sm:hidden border-t border-amber-100 bg-white px-4 pb-3">
         <div class="grid grid-cols-1 gap-1 pt-2">
-          <a href="#" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Home</a>
-          <a href="#catalog" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Products</a>
-          <button type="button" onclick="closeMobileMenu(); openAboutModal()" class="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">About Us</button>
-          <a href="#quality" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Quality</a>
-          <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Bulk Orders</a>
-          <button type="button" onclick="closeMobileMenu(); openVisitorsModal()" class="text-left px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Visitors</button>
-          <a href="#contact" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Contact Us</a>
+          <a href="index.html" aria-current="page" class="agt-current-page px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Home</a>
+          <a href="products.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Products</a>
+          <a href="about.html" onclick="closeMobileMenu()" class="block px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">About Us</a>
+          <a href="quality.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Quality</a>
+          <a href="bulk-orders.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Bulk Orders</a>
+          <a href="visitors.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Visitors</a>
+          <a href="contact.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Contact Us</a>
+          <a href="login.html" onclick="closeMobileMenu()" class="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-700 hover:bg-amber-50">Login / Track</a>
         </div>
       </div>
     </nav>
   </header>
 
-  <!-- HERO BANNER -->
-  <section class="relative bg-gradient-to-b from-white via-amber-50/30 to-[#fcfbf9] border-b border-amber-200/50 py-10 sm:py-16 overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ca8a04_1px,transparent_1px)] [background-size:16px_16px]"></div>
-    <div class="max-w-7xl mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7 text-center lg:text-left space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c1512] border border-[#1c1512] text-white text-xs font-semibold tracking-wider uppercase">
-          <i class="fa-solid fa-award text-gold-400"></i> Pure Western Ghats Spices • Kudavasal
-        </div>
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-cinzel font-black gold-gradient-text leading-tight">
-          ARCHERS GLOBAL TRADERS
-        </h1>
-        <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
-          100% pure cardamom (8mm+ to 5mm), Malabar pepper, premium whole cashews and pure wild honey. Available for wholesale and retail orders.
-        </p>
-        <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
-          <a href="#catalog" class="gold-button px-6 py-3 rounded-full text-xs sm:text-sm uppercase tracking-widest flex items-center gap-2">
-            <span>Explore Spices</span> <i class="fa-solid fa-arrow-down text-xs"></i>
-          </a>
-          <a href="tel:+918903026202" class="bg-white hover:bg-stone-50 text-slate-800 border border-amber-300 px-6 py-3 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm">
-            <i class="fa-solid fa-phone text-gold-400"></i> +91 89030 26202
-          </a>
-        </div>
-      </div>
-      <div class="lg:col-span-5 flex justify-center">
-        <div class="relative group">
-          <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-full p-2 bg-gradient-to-tr from-gold-700 via-amber-400 to-yellow-600 shadow-2xl relative">
-            <img src="logo.jpeg" alt="Archers Gold Medallion" class="w-full h-full object-cover rounded-full shadow-inner">
-          </div>
-          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white border border-amber-300 py-1.5 px-4 rounded-full shadow-md flex items-center gap-2 whitespace-nowrap">
-            <i class="fa-solid fa-certificate text-gold-400 text-sm"></i>
-            <span class="text-xs font-cinzel font-extrabold text-gold-300">100% NATURAL & PURE</span>
-          </div>
-        </div>
+  <!-- ARCHERS GLOBAL TRADERS: five supplied category banner images -->
+  <section id="hero-slider" class="agt-hero" aria-label="Featured categories">
+    <div class="agt-stage">
+      <article class="agt-slide is-active" data-slide="0" aria-hidden="false">
+        <a class="agt-banner-link" href="#catalog" data-category-jump="all" aria-label="Explore Archers Global Traders products"><img class="agt-banner" src="assets/slide-brand.png" alt="Archers Global Traders — Western Ghats Spices in Delta" fetchpriority="high"></a>
+      </article>
+      <article class="agt-slide" data-slide="1" aria-hidden="true">
+        <a class="agt-banner-link" href="#catalog" data-category-jump="spices" aria-label="Explore spices"><img class="agt-banner" src="assets/slide-spices.png" alt="Premium Spices — Archers Global Traders" loading="lazy"></a>
+      </article>
+      <article class="agt-slide" data-slide="2" aria-hidden="true">
+        <a class="agt-banner-link" href="#catalog" data-category-jump="dry-fruits" aria-label="Explore dry fruits and nuts"><img class="agt-banner" src="assets/slide-dry-fruits.png" alt="Premium Dry Fruits and Nuts — Archers Global Traders" loading="lazy"></a>
+      </article>
+      <article class="agt-slide" data-slide="3" aria-hidden="true">
+        <a class="agt-banner-link" href="#catalog" data-category-jump="rice-grains" aria-label="Explore rice and grains"><img class="agt-banner" src="assets/slide-grains.png" alt="Premium Grains — Archers Global Traders" loading="lazy"></a>
+      </article>
+      <article class="agt-slide" data-slide="4" aria-hidden="true">
+        <a class="agt-banner-link" href="#catalog" data-category-jump="honey" aria-label="Explore natural honey"><img class="agt-banner" src="assets/slide-honey.png" alt="Natural Honey — Archers Global Traders" loading="lazy"></a>
+      </article>
+      <button type="button" id="hero-prev" class="agt-arrow agt-prev" aria-label="Previous slide">‹</button>
+      <button type="button" id="hero-next" class="agt-arrow agt-next" aria-label="Next slide">›</button>
+      <div class="agt-dots" role="group" aria-label="Choose slide">
+        <button type="button" class="hero-dot active" data-go-slide="0" aria-label="Show slide 1" aria-current="true"></button>
+        <button type="button" class="hero-dot" data-go-slide="1" aria-label="Show slide 2"></button>
+        <button type="button" class="hero-dot" data-go-slide="2" aria-label="Show slide 3"></button>
+        <button type="button" class="hero-dot" data-go-slide="3" aria-label="Show slide 4"></button>
+        <button type="button" class="hero-dot" data-go-slide="4" aria-label="Show slide 5"></button>
       </div>
     </div>
   </section>
@@ -195,10 +266,20 @@
   <!-- PRODUCT CATALOG SECTION -->
   <main id="catalog" class="flex-1 max-w-7xl mx-auto px-4 py-12 w-full">
     <span id="quality" class="sr-only" aria-hidden="true"></span>
+    <!-- PRODUCT CATEGORIES: filters the existing product catalogue without changing cart/order logic -->
+    <section id="shop-categories" class="mb-10" aria-labelledby="category-heading">
+      <div class="flex flex-wrap items-end justify-between gap-3 mb-4"><div><p class="text-[10px] sm:text-xs font-extrabold uppercase tracking-[.22em] text-amber-800">Find what you need</p><h2 id="category-heading" class="font-cinzel text-xl sm:text-2xl font-black text-[#241409] mt-1">Shop by Category</h2></div><button type="button" onclick="filterCategory('all')" class="text-xs sm:text-sm font-bold text-amber-900 underline underline-offset-4">View All Products</button></div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" role="group" aria-label="Filter products by category">
+        <button type="button" data-category="spices" onclick="filterCategory('spices')" class="category-chip rounded-2xl p-4 text-left"><span class="text-2xl">🌿</span><span class="block mt-2 font-extrabold text-sm">Spices</span><span class="block text-[11px] opacity-80 mt-1">Cardamom, pepper & more</span></button>
+        <button type="button" data-category="dry-fruits" onclick="filterCategory('dry-fruits')" class="category-chip rounded-2xl p-4 text-left"><span class="text-2xl">🥜</span><span class="block mt-2 font-extrabold text-sm">Dry Fruits & Nuts</span><span class="block text-[11px] opacity-80 mt-1">Cashews and more</span></button>
+        <button type="button" data-category="honey" onclick="filterCategory('honey')" class="category-chip rounded-2xl p-4 text-left"><span class="text-2xl">🍯</span><span class="block mt-2 font-extrabold text-sm">Honey Varieties</span><span class="block text-[11px] opacity-80 mt-1">Moringa, mountain & more</span></button>
+        <button type="button" data-category="rice-grains" onclick="filterCategory('rice-grains')" class="category-chip rounded-2xl p-4 text-left"><span class="text-2xl">🌾</span><span class="block mt-2 font-extrabold text-sm">Rice & Grains</span><span class="block text-[11px] opacity-80 mt-1">Traditional grains</span></button>
+      </div>
+    </section>
     <div class="text-center max-w-2xl mx-auto mb-10">
       <span class="text-amber-800 font-cinzel tracking-[0.2em] text-xs uppercase font-extrabold">Official Products & Packaging</span>
-      <h2 class="text-2xl sm:text-4xl font-cinzel font-black gold-gradient-text mt-1">Our Premium Spice Collection</h2>
-      <p class="text-xs sm:text-sm text-slate-500 mt-2">Available in 100g, 250g, 500g, and 1000g (1 Kg) packs with real-time dynamic pricing.</p>
+      <h2 class="text-2xl sm:text-4xl font-cinzel font-black gold-gradient-text mt-1">Our Product Collection</h2>
+      <p class="text-xs sm:text-sm text-slate-500 mt-2">Choose from spices, dry fruits, honey varieties, and rice & grains. Select a pack size to view the available price.</p>
     </div>
 
     <!-- PRODUCTS GRID -->
@@ -210,15 +291,15 @@
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-gold-500/10">
       <div>
         <div class="flex items-center gap-3 mb-3">
-          <img src="logo.jpeg" alt="Archers Logo" class="w-10 h-10 rounded-full border border-gold-500/40 object-cover">
+          <img src="assets/logo.png" alt="Archers Logo" class="w-10 h-10 rounded-full border border-gold-500/40 object-cover">
           <span class="font-cinzel text-base font-black gold-gradient-text tracking-wider">ARCHERS GLOBAL TRADERS</span>
         </div>
         <div class="mb-3">
-          <span class="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-900">Arikrishnan & Co</span>
+          <span class="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-900">WHOLESALE • RETAIL • BRANDING</span>
           <p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-900 mt-1">Archers Families</p>
         </div>
         <p class="text-slate-500 leading-relaxed">
-          Wholesale & Retail Pure Spices exporter and distributor located in Kudavasal, Thiruvarur. Supplying premium cardamom grades, black pepper, cashews, and wild honey.
+          Wholesale & Retail Pure Spices exporter and distributor located in Kudavasal, Thiruvarur. Supplying premium cardamom grades, black pepper, cashews, honey varieties, and traditional grains.
         </p>
       </div>
 
@@ -246,8 +327,18 @@
 
     </div>
 
+    <div class="max-w-7xl mx-auto px-4 py-5 border-b border-amber-100/50">
+      <h4 class="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-widest mb-3">Policies & Support</h4>
+      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs">
+        <a class="text-amber-900 hover:text-amber-600 underline underline-offset-4" href="privacy-policy.html">Privacy Policy</a>
+        <a class="text-amber-900 hover:text-amber-600 underline underline-offset-4" href="shipping-policy.html">Shipping Policy</a>
+        <a class="text-amber-900 hover:text-amber-600 underline underline-offset-4" href="refund-policy.html">Cancellation & Refund</a>
+        <a class="text-amber-900 hover:text-amber-600 underline underline-offset-4" href="terms.html">Terms & Conditions</a>
+      </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 pt-6 flex flex-wrap justify-between items-center gap-4 text-slate-400 text-[11px]">
-      <p>© 2026 Archers Global Traders (Arikrishnan & Co). All Rights Reserved.</p>
+      <p>© 2026 Archers Global Traders. All Rights Reserved.</p>
       <div class="flex items-center gap-4"><span>FSSAI Certified Spices</span></div>
     </div>
   </footer>
@@ -259,17 +350,17 @@
     <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-amber-200">
       <div class="p-6 border-b border-amber-100 flex items-center justify-between bg-amber-50/50">
         <div class="flex items-center gap-3">
-          <img src="logo.jpeg" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-amber-300">
+          <img src="assets/logo.png" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-amber-300">
           <div>
             <h3 class="font-cinzel text-lg font-extrabold text-amber-900">About Archers Global Traders</h3>
-            <p class="text-xs text-slate-500 font-semibold">Backed by Arikrishnan & Co</p>
+            <p class="text-xs text-slate-500 font-semibold">Wholesale • Retail • Branding</p>
           </div>
         </div>
         <button type="button" onclick="closeAboutModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <div class="p-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
         <p>
-          Welcome to <strong class="text-amber-900">Archers Global Traders</strong>, operated under the esteemed guidance of <strong class="text-amber-900">Arikrishnan & Co</strong>. Based in the agricultural heartland of Kudavasal, Thiruvarur District, Tamil Nadu, we specialize in sourcing and distributing 100% pure, farm-fresh spices and dry fruits.
+          Welcome to <strong class="text-amber-900">Archers Global Traders</strong>, focused on Wholesale, Retail and Branding. Based in the agricultural heartland of Kudavasal, Thiruvarur District, Tamil Nadu, we specialize in sourcing and distributing 100% pure, farm-fresh spices and dry fruits.
         </p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
           <div class="bg-stone-50 p-4 rounded-xl border border-amber-100">
@@ -297,7 +388,7 @@
       <div class="p-5 border-b border-amber-100 flex items-center justify-between">
         <div>
           <h3 class="font-cinzel text-lg font-extrabold text-slate-900">Visitor Spice Inquiry</h3>
-          <p class="text-xs text-slate-500 mt-1">Select the spices and nuts you are interested in.</p>
+          <p class="text-xs text-slate-500 mt-1">Select the products you are interested in.</p>
         </div>
         <button type="button" onclick="closeVisitorsModal()" class="text-slate-400 hover:text-slate-800 p-2"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -365,8 +456,8 @@
           <label class="block text-xs font-bold text-slate-700 sm:col-span-2">Delivery Address *<textarea id="cust-address" name="address" required rows="3" autocomplete="street-address" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm font-normal"></textarea></label>
         </div>
         <fieldset class="space-y-2"><legend class="text-xs font-extrabold text-slate-700">Payment Preference *</legend>
-          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Cash on Delivery" checked> Cash on Delivery</label>
-          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Online Payment (arrange with seller)"> Online Payment (confirm with seller)</label>
+          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm opacity-60"><input type="radio" name="pay-method" value="Cash on Delivery" disabled> Cash on Delivery <span class="ml-auto text-xs font-bold text-red-600">Currently Unavailable</span></label>
+          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Online Payment (arrange with seller)" checked> Online Payment (confirm with seller)</label>
           <p class="text-[11px] text-slate-500">Online payment is not processed on this website. Confirm payment instructions directly with Archers Global Traders.</p>
         </fieldset>
         <div class="flex gap-3"><button type="button" onclick="closeCheckoutModal()" class="flex-1 rounded-xl border border-slate-300 py-3 text-sm font-bold text-slate-700">Back</button><button type="submit" class="gold-button flex-1 rounded-xl py-3 text-sm font-extrabold">Place Order</button></div>
@@ -381,7 +472,7 @@
       <h2 class="font-cinzel text-xl font-extrabold text-amber-900">Order Prepared!</h2>
       <p class="text-sm text-slate-600 mt-2">Order reference: <strong id="succ-order-id"></strong></p>
       <p class="text-sm text-slate-600 mt-1">Total: <strong id="succ-total"></strong></p>
-      <p class="text-xs text-slate-500 mt-3">Tap below to send the order details to Archers Global Traders on WhatsApp. Your order is not confirmed until the seller replies.</p>
+      <p class="text-xs text-slate-500 mt-3">Your order has been saved. No payment has been taken on this website. Tap below to confirm payment instructions with Archers Global Traders.</p>
       <a id="succ-whatsapp-btn" href="#" target="_blank" rel="noopener" class="mt-5 block rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white py-3 font-extrabold text-sm"><i class="fa-brands fa-whatsapp mr-1"></i> Send Order details to WhatsApp</a>
       <button type="button" onclick="closeOrderSuccessModal()" class="mt-3 w-full rounded-xl border border-slate-300 py-2.5 text-sm font-bold text-slate-700">Close</button>
     </div>
@@ -391,18 +482,18 @@
   <script>
     // Product image filenames match the supplied images ZIP exactly.
     const ASSETS = {
-      pouch8mm: "cardamom.png", pouchMulti: "cardamom.png", pepperBlack: "pepper.png",
-      pepperWhite: "White Pepper.png", cloves: "clove.png", cinnamonStick: "Cinnamon Rolls.png",
-      starAnise: "Star Anise.png", turmericSalem: "Turmeric Fingers.png", cuminJeera: "Cumin Seeds.png",
-      fennelSaunf: "fennel seeds.png", nutmegWhole: "Whole Nutmeg with Shell.png",
-      maceJavithri: "Golden Mace Flower.png", cashewW320: "Whole Cashews.png",
-      cashewSplits: "Whole Cashews.png", honeyRaw: "honey.png", blackKavuni: "Black Kavuni Rice.png"
+      pouch8mm: "assets/cardamom.png", pouchMulti: "assets/cardamom.png", pepperBlack: "assets/pepper.png",
+      pepperWhite: "assets/White Pepper.png", cloves: "assets/clove.png", cinnamonStick: "assets/Cinnamon Rolls.png",
+      starAnise: "assets/Star Anise.png", turmericSalem: "assets/Turmeric Fingers.png", cuminJeera: "assets/Cumin Seeds.png",
+      fennelSaunf: "assets/fennel seeds.png", nutmegWhole: "assets/Whole Nutmeg with Shell.png",
+      maceJavithri: "assets/Golden Mace Flower.png", cashewW320: "assets/Whole Cashews.png",
+      cashewSplits: "assets/Split Cashews.png", honeyRaw: "assets/Mountain Honey.png", blackKavuni: "assets/Black kavuni rice.jpeg"
     };
 
     const DEFAULT_PRODUCTS = [
-      { id:'cardamom-8mm', name:'Cardamom 8MM+ Premium', tamil:'ஏலக்காய் 8மிமீ+ (பிரீமியம் தரம்)', category:'cardamom', baseKg:4500, img:ASSETS.pouch8mm, badge:'8MM+ PREMIUM', inStock:true },
-      { id:'cardamom-7mm', name:'Cardamom 7–8MM Premium', tamil:'ஏலக்காய் 7–8மிமீ (பிரீமியம் தரம்)', category:'cardamom', baseKg:4000, img:ASSETS.pouchMulti, badge:'7–8MM PREMIUM', inStock:true },
-      { id:'cardamom-65mm', name:'Cardamom 6–7MM Premium', tamil:'ஏலக்காய் 6–7மிமீ (பிரீமியம் தரம்)', category:'cardamom', baseKg:3900, img:ASSETS.pouchMulti, badge:'6–7MM PREMIUM', inStock:true },
+      { id:'cardamom-8mm', name:'Cardamom 8MM+ Premium', tamil:'ஏலக்காய் 8மிமீ+ (பிரீமியம் தரம்)', category:'spices', baseKg:4500, img:ASSETS.pouch8mm, badge:'8MM+ PREMIUM', inStock:true },
+      { id:'cardamom-7mm', name:'Cardamom 7–8MM Premium', tamil:'ஏலக்காய் 7–8மிமீ (பிரீமியம் தரம்)', category:'spices', baseKg:4000, img:ASSETS.pouchMulti, badge:'7–8MM PREMIUM', inStock:true },
+      { id:'cardamom-65mm', name:'Cardamom 6–7MM Premium', tamil:'ஏலக்காய் 6–7மிமீ (பிரீமியம் தரம்)', category:'spices', baseKg:3900, img:ASSETS.pouchMulti, badge:'6–7MM PREMIUM', inStock:true },
       { id:'black-pepper', name:'Premium Black Pepper', tamil:'கருப்பு மிளகு (நாட்டு முதல் தரம்)', category:'spices', baseKg:800, img:ASSETS.pepperBlack, badge:'PREMIUM BLACK PEPPER', inStock:true },
       { id:'white-pepper', name:'Premium White Pepper', tamil:'சுத்தமான வெள்ளை மிளகு', category:'spices', baseKg:1250, img:ASSETS.pepperWhite, badge:'PURE WHITE', inStock:true },
       { id:'cloves-whole', name:'Premium Whole Cloves', tamil:'முதல் தர கிராம்பு (லவங்கம்)', category:'spices', baseKg:1050, img:ASSETS.cloves, badge:'HANDPICKED', inStock:true },
@@ -413,18 +504,48 @@
       { id:'fennel-seeds', name:'Premium Fennel Seeds', tamil:'பச்சை பெருஞ்சீரகம் / சோம்பு', category:'spices', baseKg:420, img:ASSETS.fennelSaunf, badge:'PREMIUM FENNEL', inStock:true },
       { id:'nutmeg-whole', name:'Whole Nutmeg with Shell', tamil:'முழு ஜாதிக்காய் (நாட்டு ரகம்)', category:'spices', baseKg:900, img:ASSETS.nutmegWhole, badge:'WHOLE NUTMEG', inStock:true },
       { id:'mace-flower', name:'Golden Mace Flower', tamil:'தூய ஜாதிப்பத்திரி (வாசனை மலர்)', category:'spices', baseKg:2200, img:ASSETS.maceJavithri, badge:'GOLDEN MACE', inStock:true },
-      { id:'whole-cashew', name:'Premium Whole Cashews W320', tamil:'முழு முந்திரி பருப்பு (W320 தரம்)', category:'nuts', baseKg:1100, img:ASSETS.cashewW320, badge:'W320 JUMBO', inStock:true },
-      { id:'split-cashew', name:'Premium Split Cashews', tamil:'முந்திரி 2-பிளவு பருப்பு (ஸ்வீட்ஸ் தரம்)', category:'nuts', baseKg:980, img:ASSETS.cashewSplits, badge:'SPLITS 2-PIECE', inStock:true },
-      { id:'wild-honey', name:'Pure Forest Wild Honey', tamil:'100% இயற்கை மலைத்தேன்', category:'honey', baseKg:650, img:ASSETS.honeyRaw, badge:'100% RAW', inStock:true },
-      { id:'black-kavuni-rice', name:'Black Kavuni Rice (Traditional Black Rice)', tamil:'கருப்பு கவுனி அரிசி', category:'rice', baseKg:0, img:ASSETS.blackKavuni, badge:'TRADITIONAL RICE', inStock:true }
+      { id:'whole-cashew', name:'Premium Whole Cashews W320', tamil:'முழு முந்திரி பருப்பு (W320 தரம்)', category:'dry-fruits', baseKg:1100, img:ASSETS.cashewW320, badge:'W320 JUMBO', inStock:true },
+      { id:'split-cashew', name:'Premium Split Cashews', tamil:'முந்திரி 2-பிளவு பருப்பு (ஸ்வீட்ஸ் தரம்)', category:'dry-fruits', baseKg:980, img:ASSETS.cashewSplits, badge:'SPLITS 2-PIECE', inStock:true },
+      { id:'wild-honey', name:'Mountain Wild Honey', tamil:'இயற்கை மலைத்தேன்', category:'honey', baseKg:650, img:ASSETS.honeyRaw, badge:'MOUNTAIN HONEY', inStock:true },
+      { id:'moringa-honey', name:'Moringa Tree Honey', tamil:'முருங்கை மரத்தேன்', category:'honey', baseKg:0, img:'assets/Moringa Honey.png', badge:'MORINGA HONEY • PRICE ON REQUEST', inStock:true },
+      { id:'forest-honey', name:'Forest Honey', tamil:'காட்டுத் தேன்', category:'honey', baseKg:0, img:'assets/Forest honey.jpeg', badge:'FOREST HONEY • PRICE ON REQUEST', inStock:true },
+      { id:'black-kavuni-rice', name:'Black Kavuni Rice (Traditional Black Rice)', tamil:'கருப்பு கவுனி அரிசி', category:'rice-grains', baseKg:0, img:ASSETS.blackKavuni, badge:'TRADITIONAL RICE', inStock:true }
     ];
 
-    let products = DEFAULT_PRODUCTS.map(p => ({...p}));
+    const PACK_SIZES = [50, 100, 250, 500, 1000];
+    function derivePackPrices(baseKg) {
+      const prices = {};
+      PACK_SIZES.forEach(w => { prices[String(w)] = Math.round(Number(baseKg || 0) * w / 1000); });
+      return prices;
+    }
+    function derivePackStock(inStock) {
+      const stocks = {};
+      PACK_SIZES.forEach(w => { stocks[String(w)] = inStock !== false; });
+      return stocks;
+    }
+    function packPrice(product, weight) {
+      const key = String(weight);
+      return product.packPrices && product.packPrices[key] !== undefined
+        ? Number(product.packPrices[key] || 0)
+        : Math.round(Number(product.baseKg || 0) * weight / 1000);
+    }
+    function packInStock(product, weight) {
+      const key = String(weight);
+      return product.packStock && product.packStock[key] !== undefined
+        ? product.packStock[key] !== false
+        : product.inStock !== false;
+    }
+    let products = DEFAULT_PRODUCTS.map(p => ({
+      ...p, packPrices: derivePackPrices(p.baseKg), packStock: derivePackStock(p.inStock)
+    }));
     let cart = JSON.parse(localStorage.getItem('agt_cart')) || [];
     let selectedWeights = {};
     let currentGeneratedOtp = null;
     let currentLoginOtp = null;
-    const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbzN8Q26fDCPsLQBFTb0_qDFvcB0e7Rvh3MlP-WpmhxA7CH0DP0HzUbvy_Ois4k5KiQE9g/exec';
+    // Public catalogue reads directly from Supabase. Keep ORDER_API_URL separate for order submission.
+    const SUPABASE_URL = 'https://wrlcuprwzxwzyawzyobr.supabase.co';
+    const SUPABASE_PUBLIC_KEY = 'sb_publishable_-EX3TGOMNd4tTut6O28SZw_IjdYfb3P';
+    const ORDER_API_URL = `${SUPABASE_URL}/functions/v1/create-order`; // Guest checkout submits to the deployed server-side order function.
     let isSubmittingOrder = false;
     let placeOrderButton = null;
 
@@ -448,28 +569,142 @@
       if (icon) icon.className = 'fa-solid fa-bars';
     }
 
+    let activeCategory = 'all';
+    let activeSlide = 0;
+    let heroTimer = null;
+    function filterCategory(category) {
+      activeCategory = category || 'all';
+      document.querySelectorAll('[data-category]').forEach(btn => btn.classList.toggle('active', btn.dataset.category === activeCategory));
+      const q = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+      const filtered = products.filter(p => (activeCategory === 'all' || p.category === activeCategory) && (!q || p.name.toLowerCase().includes(q) || (p.tamil || '').includes(q) || (p.badge || '').toLowerCase().includes(q)));
+      renderProducts(filtered);
+      const heading = document.querySelector('#catalog > .text-center h2');
+      if (heading) heading.textContent = activeCategory === 'all' ? 'Our Product Collection' : ({spices:'Premium Spices', 'dry-fruits':'Dry Fruits & Nuts', honey:'Honey Varieties', 'rice-grains':'Rice & Grains'}[activeCategory] || 'Our Product Collection');
+    }
+    function showHeroSlide(index) {
+      const slides = [...document.querySelectorAll('.hero-slide')];
+      const dots = [...document.querySelectorAll('.hero-dot')];
+      if (!slides.length) return;
+      activeSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => { const on = i === activeSlide; slide.classList.toggle('is-active', on); slide.classList.toggle('opacity-0', !on); slide.classList.toggle('pointer-events-none', !on); slide.setAttribute('aria-hidden', String(!on)); });
+      dots.forEach((dot, i) => { dot.classList.toggle('active', i === activeSlide); if (i === activeSlide) dot.setAttribute('aria-current','true'); else dot.removeAttribute('aria-current'); });
+    }
+    function startHeroSlider() {
+      const root = document.getElementById('hero-slider');
+      if (!root) return;
+      const stop = () => { if (heroTimer) clearInterval(heroTimer); heroTimer = null; };
+      const start = () => { stop(); if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) heroTimer = setInterval(() => showHeroSlide(activeSlide + 1), 5000); };
+      document.getElementById('hero-prev')?.addEventListener('click', () => { showHeroSlide(activeSlide - 1); start(); });
+      document.getElementById('hero-next')?.addEventListener('click', () => { showHeroSlide(activeSlide + 1); start(); });
+      document.querySelectorAll('[data-go-slide]').forEach(dot => dot.addEventListener('click', () => { showHeroSlide(Number(dot.dataset.goSlide)); start(); }));
+      root.addEventListener('mouseenter', stop); root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop); root.addEventListener('focusout', start);
+      let touchStartX = null;
+      root.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, {passive:true});
+      root.addEventListener('touchend', e => { if (touchStartX === null) return; const dx=e.changedTouches[0].clientX-touchStartX; if (Math.abs(dx)>45) { showHeroSlide(activeSlide + (dx<0?1:-1)); start(); } touchStartX=null; }, {passive:true});
+      start();
+    }
+
     function initCatalog() {
+      startHeroSlider();
       products.forEach(p => { if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000; });
       renderProducts(products); renderTickerRates(); updateCartUI();
       loadPublicProducts();
     }
 
-    function loadPublicProducts() {
-      if (!ORDER_API_URL) return;
-      window.handlePublicProducts = function(data) {
-        if (!data || !Array.isArray(data.products) || !data.products.length) return;
-        const remote = new Map(data.products.map(p => [String(p.id), p]));
-        products = DEFAULT_PRODUCTS.map(seed => {
-          const p = remote.get(seed.id);
-          return p ? {...seed, baseKg:Number(p.baseKg||0), inStock:p.inStock !== false, img:seed.img} : {...seed};
-        });
-        products.forEach(p => { if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000; });
-        renderProducts(products); renderTickerRates();
+    async function loadPublicProducts() {
+      // Start with the existing local catalogue so the page still works if Supabase is unavailable.
+      const headers = {
+        apikey: SUPABASE_PUBLIC_KEY,
+        Authorization: `Bearer ${SUPABASE_PUBLIC_KEY}`
       };
-      const script = document.createElement('script');
-      script.src = ORDER_API_URL + '?action=listProducts&callback=handlePublicProducts&v=' + Date.now();
-      script.onerror = () => console.warn('Could not load the live product price/stock list; showing default catalogue.');
-      document.head.appendChild(script);
+      const rest = (table, query) =>
+        fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, { headers })
+          .then(async response => {
+            if (!response.ok) throw new Error(`${table}: HTTP ${response.status}`);
+            return response.json();
+          });
+
+      const normalize = value => String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '');
+
+      try {
+        const [remoteProducts, remoteVariants] = await Promise.all([
+          rest('products', 'select=id,name,slug,description,category_id,image_url,is_active'),
+          rest('product_variants', 'select=id,product_id,pack_size_grams,price_paise,stock_quantity,is_active')
+        ]);
+
+        const activeProducts = (remoteProducts || []).filter(p => p.is_active !== false);
+        const activeVariants = (remoteVariants || []).filter(v => v.is_active !== false);
+        const defaultsById = new Map(DEFAULT_PRODUCTS.map(p => [String(p.id), p]));
+        const updates = new Map();
+
+        activeProducts.forEach(remote => {
+          const slug = String(remote.slug || '');
+          const nameKey = normalize(remote.name);
+          let local = defaultsById.get(slug);
+          if (!local) local = DEFAULT_PRODUCTS.find(p => normalize(p.name) === nameKey);
+          if (!local) {
+            local = DEFAULT_PRODUCTS.find(p =>
+              normalize(p.name).includes(nameKey) || nameKey.includes(normalize(p.name))
+            );
+          }
+          if (!local) return;
+
+          const variantRows = activeVariants.filter(v => String(v.product_id) === String(remote.id));
+          if (!variantRows.length) return;
+
+          const packPrices = { ...(local.packPrices || derivePackPrices(local.baseKg)) };
+          const packStock = { ...(local.packStock || derivePackStock(local.inStock)) };
+          variantRows.forEach(v => {
+            const grams = String(Number(v.pack_size_grams));
+            if (!PACK_SIZES.includes(Number(grams))) return;
+            packPrices[grams] = Number(v.price_paise || 0) / 100;
+            packStock[grams] = Number(v.stock_quantity || 0) > 0;
+          });
+
+          const rawCategory = `${remote.category_id || ''} ${remote.name || ''}`.toLowerCase();
+          const category = /honey|தேன்/.test(rawCategory) ? 'honey'
+            : /dry|nut|cashew/.test(rawCategory) ? 'dry-fruits'
+            : /rice|grain|millet|kavuni/.test(rawCategory) ? 'rice-grains'
+            : local.category;
+
+          const supabaseVariantsByGrams = {};
+          variantRows.forEach(v => { supabaseVariantsByGrams[String(Number(v.pack_size_grams))] = v.id; });
+          updates.set(String(local.id), {
+            ...local,
+            supabaseProductId: remote.id,
+            supabaseVariantsByGrams,
+            name: remote.name || local.name,
+            img: remote.image_url || local.img,
+            category,
+            packPrices,
+            packStock,
+            inStock: PACK_SIZES.some(w => packStock[String(w)] === true),
+            active: remote.is_active !== false
+          });
+        });
+
+        // Preserve the existing catalogue and update only products matched to Supabase.
+        products = DEFAULT_PRODUCTS
+          .map(p => updates.get(String(p.id)) || {
+            ...p,
+            packPrices: derivePackPrices(p.baseKg),
+            packStock: derivePackStock(p.inStock),
+            active: true
+          })
+          .filter(p => p.active !== false);
+
+        products.forEach(p => {
+          if (!selectedWeights[p.id]) selectedWeights[p.id] = 1000;
+        });
+        renderProducts(activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory));
+        renderTickerRates();
+        updateCartUI();
+      } catch (error) {
+        console.warn('Could not load the live Supabase catalogue; keeping local catalogue and prices.', error);
+      }
     }
 
     function englishProductName(name) {
@@ -480,13 +715,14 @@
       const grid = document.getElementById('products-grid');
       grid.innerHTML = items.map(p => {
         const activeWeight = selectedWeights[p.id] || 1000;
-        const currentPrice = Math.round(Number(p.baseKg || 0) * (activeWeight / 1000));
-        const outOfStock = p.inStock === false;
-        const hasPrice = Number(p.baseKg || 0) > 0;
+        const currentPrice = packPrice(p, activeWeight);
+        const outOfStock = !packInStock(p, activeWeight);
+        const allOutOfStock = PACK_SIZES.every(w => !packInStock(p, w));
+        const hasPrice = currentPrice > 0;
         return `
           <div class="bg-white border border-amber-100 hover:border-amber-400 rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col group">
             <div class="relative h-60 bg-stone-50 overflow-hidden flex items-center justify-center p-3 border-b border-amber-50">
-              <img src="${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg">
+              <img loading="lazy" decoding="async" src="${p.img}" alt="${p.name}" onerror="this.onerror=null;this.src='assets/favicon.png';this.classList.add('image-fallback');" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg">
               <span class="absolute top-3 left-3 bg-white/95 border border-amber-300 text-amber-900 font-cinzel text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">${p.badge}</span>
               ${outOfStock ? '<span class="absolute inset-0 bg-slate-900/45 flex items-center justify-center"><span class="bg-red-700 text-white text-xs font-extrabold tracking-wider px-4 py-2 rounded-full shadow-lg">OUT OF STOCK</span></span>' : ''}
             </div>
@@ -495,19 +731,20 @@
                 <h3 class="font-cinzel text-sm sm:text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">${englishProductName(p.name)}</h3>
                 <p class="text-xs text-amber-900/80 font-tamil mt-1 font-semibold">${p.tamil}</p>
               </div>
-
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Select Weight Pack:</label>
-                <div class="grid grid-cols-4 gap-1.5 text-[11px]">
-                  ${[100, 250, 500, 1000].map(wt => `
-                    <button type="button" onclick="changeVariant('${p.id}',${wt})" 
-                            class="py-1 rounded-lg border font-semibold transition ${activeWeight === wt ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold' : 'bg-stone-50 text-slate-600 border-slate-200 hover:border-amber-300'}">
-                      ${wt === 1000 ? '1 Kg' : wt + 'g'}
-                    </button>
-                  `).join('')}
+                <div class="grid grid-cols-5 gap-1.5 text-[10px] sm:text-[11px]">
+                  ${PACK_SIZES.map(wt => {
+                    const available = packInStock(p, wt);
+                    return `<button type="button" onclick="changeVariant('${p.id}',${wt})"
+                      ${!available ? 'title="Out of stock"' : ''}
+                      class="py-1.5 rounded-lg border font-semibold transition ${activeWeight === wt ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold' : 'bg-stone-50 text-slate-600 border-slate-200 hover:border-amber-300'} ${!available ? 'opacity-60 line-through' : ''}">
+                      ${wt === 1000 ? '1kg' : wt + 'g'}${!available ? ' ×' : ''}
+                    </button>`;
+                  }).join('')}
                 </div>
+                ${outOfStock ? '<p class="mt-1 text-[10px] font-bold text-red-700">Selected pack is out of stock.</p>' : ''}
               </div>
-
               <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <span class="text-[10px] text-slate-400 block font-medium">Pack Price:</span>
@@ -534,17 +771,17 @@
         <span class="inline-flex items-center gap-1.5">
           <span class="text-slate-500">${p.badge}:</span>
           <span class="font-extrabold text-amber-900">${Number(p.baseKg)>0 ? '₹'+Number(p.baseKg).toLocaleString('en-IN')+'/Kg' : 'Price on request'}</span>
-          ${p.inStock === false ? '<span class="text-red-700 font-bold">Out of Stock</span>' : ''}
+          ${!packInStock(p,1000) ? '<span class="text-red-700 font-bold">1kg Out of Stock</span>' : ''}
         </span>
       `).join(' • ');
     }
 
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
-      if (!product || product.inStock === false) return alert('This product is currently out of stock.');
-      if (!(Number(product.baseKg) > 0)) return alert('Price for this product will be announced soon. Please contact us on WhatsApp.');
       const weight = selectedWeights[productId] || 1000;
-      const unitPrice = Math.round(product.baseKg * (weight / 1000));
+      if (!product || !packInStock(product, weight)) return alert('This pack size is currently out of stock.');
+      const unitPrice = packPrice(product, weight);
+      if (!(unitPrice > 0)) return alert('Price for this pack will be announced soon. Please contact us on WhatsApp.');
       const existing = cart.find(item => item.id === productId && item.weight === weight);
 
       if (existing) {
@@ -659,7 +896,7 @@
 
     function handleSearch(query) {
       const q = query.toLowerCase().trim();
-      const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.tamil.includes(q) || p.badge.toLowerCase().includes(q));
+      const filtered = products.filter(p => (activeCategory === 'all' || p.category === activeCategory) && (p.name.toLowerCase().includes(q) || (p.tamil || '').includes(q) || (p.badge || '').toLowerCase().includes(q)));
       renderProducts(filtered);
     }
 
@@ -688,8 +925,6 @@
 
     async function handlePlaceOrder(e) {
       e.preventDefault();
-
-      // Prevent rapid double-clicks or repeated form submissions from creating two orders.
       if (isSubmittingOrder) return;
       if (!cart.length) return alert('Your cart is empty!');
 
@@ -699,10 +934,9 @@
       if (placeOrderButton) {
         placeOrderButton.disabled = true;
         placeOrderButton.dataset.originalText = placeOrderButton.textContent;
-        placeOrderButton.textContent = 'Preparing Order...';
+        placeOrderButton.textContent = 'Submitting Order...';
         placeOrderButton.classList.add('opacity-60', 'cursor-not-allowed');
       }
-
       const releaseOrderLock = () => {
         isSubmittingOrder = false;
         if (placeOrderButton) {
@@ -713,80 +947,86 @@
         placeOrderButton = null;
       };
 
-      const unavailable = cart.find(i => { const p=products.find(x=>x.id===i.id); return !p || p.inStock===false || !(Number(p.baseKg)>0) || Math.round(Number(p.baseKg)*(i.weight/1000))!==Number(i.price); });
-      if (unavailable) {
-        alert('A product price or stock status has changed. Please refresh the catalogue and check your cart again.');
-        loadPublicProducts();
-        releaseOrderLock();
-        return;
-      }
-      const orderId = 'AGT-' + Date.now().toString().slice(-8);
-      const name = document.getElementById('cust-name').value.trim();
-      const phone = document.getElementById('cust-phone').value.trim();
-      const email = document.getElementById('cust-email').value.trim();
-      const pin = document.getElementById('cust-pin').value.trim();
-      const address = document.getElementById('cust-address').value.trim();
-      const payMethodEl = document.querySelector('input[name="pay-method"]:checked');
-      const payMethod = payMethodEl ? payMethodEl.value : 'Not selected';
-      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-      const delivery = subtotal >= 1000 ? 0 : 50;
-      const grandTotal = subtotal + delivery;
-      const items = cart.map(i => ({
-        id: i.id, name: englishProductName(i.name), weight: i.weight === 1000 ? '1Kg' : `${i.weight}g`,
-        quantity: i.qty, unitPrice: i.price, lineTotal: i.price * i.qty
-      }));
-      const order = {
-        orderId, createdAt: new Date().toISOString(), customerName: name, phone, email,
-        pincode: pin, address, paymentMethod: payMethod, paymentStatus: 'Pending',
-        orderStatus: 'Pending', items, subtotal, deliveryFee: delivery, total: grandTotal
-      };
-
-      // Local browser copy is only a fallback; it is not a shared or secure order database.
       try {
-        const localOrders = JSON.parse(localStorage.getItem('agt_local_orders') || '[]');
-        localOrders.push(order);
-        localStorage.setItem('agt_local_orders', JSON.stringify(localOrders));
-      } catch (err) { console.warn('Could not save local order copy.', err); }
+        const name = document.getElementById('cust-name').value.trim();
+        const phone = document.getElementById('cust-phone').value.trim();
+        const email = document.getElementById('cust-email').value.trim();
+        const pin = document.getElementById('cust-pin').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+        const payMethodEl = document.querySelector('input[name="pay-method"]:checked');
+        if (!name || !phone || !pin || !address) throw new Error('Please fill in all required customer and delivery details.');
+        if (!payMethodEl || payMethodEl.value === 'Cash on Delivery') throw new Error('Cash on Delivery is currently unavailable. Please select online payment.');
+        if (!ORDER_API_URL.trim()) throw new Error('Online order submission is not configured yet. Please contact us on WhatsApp.');
 
-      // The backend must be deployed by the site owner before this can write to Google Sheets.
-      if (ORDER_API_URL.trim()) {
-        try {
-          await fetch(ORDER_API_URL, {
-            method: 'POST', mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'newOrder', order })
-          });
-        } catch (err) {
-          console.error('Google Sheets order submission failed.', err);
-          alert('Your WhatsApp order message is ready, but the online order register may not have received it. Please contact us if needed.');
+        // Never send client-calculated prices as authoritative values. Backend uses variant IDs,
+        // reloads current prices, locks stock rows and calculates totals inside one transaction.
+        const orderItems = cart.map(item => {
+          const product = products.find(p => String(p.id) === String(item.id));
+          const variantId = product?.supabaseVariantsByGrams?.[String(Number(item.weight))];
+          if (!variantId) throw new Error(`We could not verify ${englishProductName(item.name)} (${item.weight}g) against the live catalogue. Refresh the page and try again.`);
+          return { variantId, quantity: Number(item.qty) };
+        });
+
+        const response = await fetch(ORDER_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_PUBLIC_KEY,
+            'Authorization': `Bearer ${SUPABASE_PUBLIC_KEY}`
+          },
+          body: JSON.stringify({
+            customer: { name, phone, email: email || null, pincode: pin, address },
+            items: orderItems
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.success || !result.order) {
+          throw new Error(result.error || `Order submission failed (HTTP ${response.status}). Please try again or contact us on WhatsApp.`);
         }
+
+        const savedOrder = result.order;
+        const orderId = savedOrder.order_number;
+        const subtotal = Number(savedOrder.subtotal_paise) / 100;
+        const delivery = Number(savedOrder.shipping_paise) / 100;
+        const grandTotal = Number(savedOrder.total_paise) / 100;
+        const savedItems = Array.isArray(savedOrder.items) ? savedOrder.items : [];
+        const lines = [
+          '*NEW ORDER - ARCHERS GLOBAL TRADERS*',
+          `*Order ID:* ${orderId}`,
+          `*Customer:* ${name}`,
+          `*Mobile:* ${phone}`,
+          `*Email:* ${email || 'Not provided'}`,
+          `*Address:* ${address}`,
+          `*PIN Code:* ${pin}`,
+          '*Payment:* Online payment arrangement pending; no payment was taken by this website.',
+          '', '*ITEMS ORDERED:*',
+          ...savedItems.map((item, idx) => `${idx + 1}. ${item.product_name} (${item.pack_size_grams}g) x ${item.quantity} = ₹${(Number(item.line_total_paise) / 100).toLocaleString('en-IN')}`),
+          '', `*Subtotal:* ₹${subtotal.toLocaleString('en-IN')}`,
+          `*Delivery:* ${delivery === 0 ? 'FREE' : '₹' + delivery.toLocaleString('en-IN')}`,
+          `*Total Amount:* ₹${grandTotal.toLocaleString('en-IN')}`,
+          '', '*Order is recorded as pending. Please confirm payment instructions.*'
+        ];
+        document.getElementById('succ-whatsapp-btn').href = `https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`;
+        document.getElementById('succ-order-id').innerText = orderId;
+        document.getElementById('succ-total').innerText = '₹' + grandTotal.toLocaleString('en-IN');
+
+        cart = [];
+        saveCart();
+        updateCartUI();
+        closeCheckoutModal();
+        document.getElementById('order-success-modal').classList.remove('hidden');
+        if (placeOrderButton) {
+          placeOrderButton.disabled = false;
+          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Place Order';
+          placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+        }
+        placeOrderButton = null;
+        // Keep the submission lock until the success modal closes.
+      } catch (error) {
+        console.error('Order submission failed:', error);
+        alert(error?.message || 'Could not submit your order. Please try again.');
+        releaseOrderLock();
       }
-
-      const lines = [
-        '*NEW SPICE ORDER - ARCHERS GLOBAL TRADERS*',
-        `*Order ID:* #${orderId}`,
-        `*Customer:* ${name}`,
-        `*Mobile:* ${phone}`,
-        `*Email:* ${email || 'Not provided'}`,
-        `*Address:* ${address}`,
-        `*Pincode:* ${pin}`,
-        `*Payment:* ${payMethod}`,
-        '', '*ITEMS ORDERED:*',
-        ...items.map((item, idx) => `${idx + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.lineTotal}`),
-        '', `*Subtotal:* ₹${subtotal}`, `*Delivery:* ${delivery === 0 ? 'FREE' : '₹' + delivery}`,
-        `*Total Amount:* ₹${grandTotal}`,
-        '', '*Please confirm this order.*'
-      ];
-      const waUrl = `https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`;
-      document.getElementById('succ-whatsapp-btn').href = waUrl;
-      document.getElementById('succ-order-id').innerText = '#' + orderId;
-      document.getElementById('succ-total').innerText = '₹' + grandTotal.toLocaleString('en-IN');
-
-      cart = [];
-      saveCart();
-      updateCartUI();
-      closeCheckoutModal();
-      document.getElementById('order-success-modal').classList.remove('hidden');
     }
 
     function closeOrderSuccessModal() {
@@ -850,10 +1090,10 @@
 
     function sendVisitorInquiry() {
       const selectedIds = [...document.querySelectorAll('.visitor-product:checked')].map(el => el.value);
-      if (!selectedIds.length) return alert('Please select at least one spice or nut.');
+      if (!selectedIds.length) return alert('Please select at least one product.');
       const selected = products.filter(p => selectedIds.includes(p.id));
       const names = selected.map(p => englishProductName(p.name));
-      const msg = `*VISITOR SPICE INQUIRY - ARCHERS GLOBAL TRADERS*%0A%0A${names.map((n,i)=>`${i+1}.${n}`).join('%0A')}%0A%0APlease share availability and wholesale/retail pricing.`;
+      const msg = `*PRODUCT INQUIRY - ARCHERS GLOBAL TRADERS*%0A%0A${names.map((n,i)=>`${i+1}.${n}`).join('%0A')}%0A%0APlease share availability and wholesale/retail pricing.`;
       window.open(`https://wa.me/918903026202?text=${msg}`, '_blank');
     }
 
@@ -870,5 +1110,40 @@
 
     window.onload = initCatalog;
   </script>
+
+<script id="agt-five-slide-controller">
+(()=>{
+ const root=document.querySelector('#hero-slider'); if(!root)return;
+ const slides=[...root.querySelectorAll('[data-slide]')],dots=[...root.querySelectorAll('[data-go-slide]')];
+ const prev=root.querySelector('#hero-prev'),next=root.querySelector('#hero-next'); let current=0,timer=null,startX=null;
+ function show(n){
+   current=(n+slides.length)%slides.length;
+   slides.forEach((el,i)=>{
+     const active=i===current,delta=i-current;
+     el.classList.toggle('is-active',active);
+     el.style.transform=`translateX(${delta*100}%)`;
+     el.style.zIndex=active?'2':'1';
+     el.style.pointerEvents=active?'auto':'none';
+     el.setAttribute('aria-hidden',active?'false':'true');
+   });
+   dots.forEach((el,i)=>{el.classList.toggle('active',i===current);if(i===current)el.setAttribute('aria-current','true');else el.removeAttribute('aria-current')});
+ }
+ function stop(){if(timer){clearInterval(timer);timer=null}}
+ function start(){stop();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>show(current+1),6500)}
+ prev?.addEventListener('click',e=>{e.stopPropagation();show(current-1);start()});
+ next?.addEventListener('click',e=>{e.stopPropagation();show(current+1);start()});
+ dots.forEach((d,i)=>d.addEventListener('click',e=>{e.stopPropagation();show(i);start()}));
+ root.querySelectorAll('[data-category-jump]').forEach(link=>link.addEventListener('click',()=>{
+   const category=link.dataset.categoryJump||'all';
+   if(typeof window.filterCategory==='function') window.filterCategory(category);
+   stop();
+ }));
+ root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
+ root.addEventListener('focusin',stop);root.addEventListener('focusout',start);
+ root.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});
+ root.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45){show(current+(dx<0?1:-1));start()}startX=null},{passive:true});
+ show(0);start();
+})();
+</script>
 </body>
 </html>
