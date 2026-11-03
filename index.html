@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <title>Archers Global Traders | Wholesale & Retail Pure Spices</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta+Malar:wght@400;600;700&display=swap" rel="stylesheet">
@@ -457,8 +458,8 @@
         </div>
         <fieldset class="space-y-2"><legend class="text-xs font-extrabold text-slate-700">Payment Preference *</legend>
           <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm opacity-60"><input type="radio" name="pay-method" value="Cash on Delivery" disabled> Cash on Delivery <span class="ml-auto text-xs font-bold text-red-600">Currently Unavailable</span></label>
-          <label class="flex items-center gap-2 rounded-lg border border-slate-200 p-3 text-sm"><input type="radio" name="pay-method" value="Online Payment (arrange with seller)" checked> Online Payment (confirm with seller)</label>
-          <p class="text-[11px] text-slate-500">Online payment is not processed on this website. Confirm payment instructions directly with Archers Global Traders.</p>
+          <label class="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm"><input type="radio" name="pay-method" value="razorpay" checked> Pay Online with Razorpay <span class="ml-auto text-xs font-bold text-emerald-700">Secure payment</span></label>
+          <p class="text-[11px] text-slate-500">You will be redirected to Razorpay Checkout to complete payment. Your order is marked paid only after server-side verification.</p>
         </fieldset>
         <div class="flex gap-3"><button type="button" onclick="closeCheckoutModal()" class="flex-1 rounded-xl border border-slate-300 py-3 text-sm font-bold text-slate-700">Back</button><button type="submit" class="gold-button flex-1 rounded-xl py-3 text-sm font-extrabold">Place Order</button></div>
       </form>
@@ -469,10 +470,10 @@
   <div id="order-success-modal" class="fixed inset-0 z-[90] hidden bg-black/70 backdrop-blur-sm items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-amber-200 p-6 text-center">
       <div class="mx-auto mb-3 w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-check text-2xl"></i></div>
-      <h2 class="font-cinzel text-xl font-extrabold text-amber-900">Order Prepared!</h2>
+      <h2 class="font-cinzel text-xl font-extrabold text-amber-900">Payment Successful!</h2>
       <p class="text-sm text-slate-600 mt-2">Order reference: <strong id="succ-order-id"></strong></p>
       <p class="text-sm text-slate-600 mt-1">Total: <strong id="succ-total"></strong></p>
-      <p class="text-xs text-slate-500 mt-3">Your order has been saved. No payment has been taken on this website. Tap below to confirm payment instructions with Archers Global Traders.</p>
+      <p class="text-xs text-slate-500 mt-3">Razorpay has confirmed your payment and our server has verified it. You can send your order details to Archers Global Traders below.</p>
       <a id="succ-whatsapp-btn" href="#" target="_blank" rel="noopener" class="mt-5 block rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white py-3 font-extrabold text-sm"><i class="fa-brands fa-whatsapp mr-1"></i> Send Order details to WhatsApp</a>
       <button type="button" onclick="closeOrderSuccessModal()" class="mt-3 w-full rounded-xl border border-slate-300 py-2.5 text-sm font-bold text-slate-700">Close</button>
     </div>
@@ -545,7 +546,12 @@
     // Public catalogue reads directly from Supabase. Keep ORDER_API_URL separate for order submission.
     const SUPABASE_URL = 'https://wrlcuprwzxwzyawzyobr.supabase.co';
     const SUPABASE_PUBLIC_KEY = 'sb_publishable_-EX3TGOMNd4tTut6O28SZw_IjdYfb3P';
-    const ORDER_API_URL = `${SUPABASE_URL}/functions/v1/create-order`; // Guest checkout submits to the deployed server-side order function.
+    const ORDER_API_URL = `${SUPABASE_URL}/functions/v1/create-order`;
+    const RAZORPAY_ORDER_API_URL = `${SUPABASE_URL}/functions/v1/create-razorpay-order`;
+    const RAZORPAY_VERIFY_API_URL = `${SUPABASE_URL}/functions/v1/verify-razorpay-payment`;
+    const PENDING_RAZORPAY_KEY = 'agt_pending_razorpay_order';
+    let pendingRazorpayOrder = null;
+    try { pendingRazorpayOrder = JSON.parse(sessionStorage.getItem(PENDING_RAZORPAY_KEY) || 'null'); } catch (_) {}
     let isSubmittingOrder = false;
     let placeOrderButton = null;
 
@@ -923,10 +929,125 @@
       document.getElementById('checkout-modal').classList.add('hidden');
     }
 
+    async function razorpayFunctionPost(url, payload) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_PUBLIC_KEY,
+          'Authorization': `Bearer ${SUPABASE_PUBLIC_KEY}`
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || `Payment request failed (HTTP ${response.status}). Please retry or contact us on WhatsApp.`);
+      }
+      return data;
+    }
+
+    async function startRazorpayPayment(order) {
+      if (!order?.id) throw new Error('The pending order reference is missing. Please contact Archers Global Traders before placing another order.');
+      if (typeof window.Razorpay !== 'function') throw new Error('Razorpay Checkout could not load. Check your internet connection and retry.');
+      const paymentOrder = await razorpayFunctionPost(RAZORPAY_ORDER_API_URL, { order_id: order.id });
+      const options = {
+        key: paymentOrder.key_id,
+        amount: paymentOrder.amount,
+        currency: paymentOrder.currency || 'INR',
+        name: 'Archers Global Traders',
+        description: `Order ${paymentOrder.order_number || order.order_number}`,
+        order_id: paymentOrder.razorpay_order_id,
+        prefill: {
+          name: document.getElementById('cust-name').value.trim(),
+          email: document.getElementById('cust-email').value.trim(),
+          contact: document.getElementById('cust-phone').value.trim()
+        },
+        notes: { agt_order_number: paymentOrder.order_number || order.order_number },
+        theme: { color: '#92400e' },
+        modal: {
+          ondismiss: function () {
+            alert('Payment window closed. Your order is still pending and has not been marked paid. Reopen checkout and choose Pay Online to retry the same order.');
+            isSubmittingOrder = false;
+            if (placeOrderButton) {
+              placeOrderButton.disabled = false;
+              placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Pay Online';
+              placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+            placeOrderButton = null;
+          }
+        },
+        handler: async function (response) {
+          try {
+            const verified = await razorpayFunctionPost(RAZORPAY_VERIFY_API_URL, {
+              order_id: order.id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            });
+            if (!verified.success) throw new Error('Payment could not be verified. Do not pay again yet; please contact us with your order reference.');
+            sessionStorage.removeItem(PENDING_RAZORPAY_KEY);
+            pendingRazorpayOrder = null;
+            const orderNumber = verified.order_number || paymentOrder.order_number || order.order_number;
+            const totalRupees = Number(order.total_paise || paymentOrder.amount) / (order.total_paise ? 100 : 100);
+            document.getElementById('succ-order-id').innerText = orderNumber;
+            document.getElementById('succ-total').innerText = '₹' + totalRupees.toLocaleString('en-IN');
+            const lines = [
+              '*PAID ORDER - ARCHERS GLOBAL TRADERS*',
+              `*Order ID:* ${orderNumber}`,
+              `*Customer:* ${document.getElementById('cust-name').value.trim()}`,
+              `*Mobile:* ${document.getElementById('cust-phone').value.trim()}`,
+              `*Email:* ${document.getElementById('cust-email').value.trim() || 'Not provided'}`,
+              `*Address:* ${document.getElementById('cust-address').value.trim()}`,
+              `*PIN Code:* ${document.getElementById('cust-pin').value.trim()}`,
+              '*Payment:* Razorpay payment verified by server.',
+              `*Total Amount:* ₹${totalRupees.toLocaleString('en-IN')}`,
+              `*Razorpay Payment ID:* ${response.razorpay_payment_id}`
+            ];
+            document.getElementById('succ-whatsapp-btn').href = `https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`;
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCheckoutModal();
+            document.getElementById('order-success-modal').classList.remove('hidden');
+            if (placeOrderButton) {
+              placeOrderButton.disabled = false;
+              placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Pay Online';
+              placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+            placeOrderButton = null;
+            // Keep lock until the success screen is closed.
+          } catch (error) {
+            console.error('Razorpay verification failed:', error);
+            alert((error?.message || 'Payment verification is still pending.') + '\n\nDo not place a new order or pay again yet. Keep this order reference and contact Archers Global Traders.');
+            isSubmittingOrder = false;
+            if (placeOrderButton) {
+              placeOrderButton.disabled = false;
+              placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Pay Online';
+              placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+            placeOrderButton = null;
+          }
+        }
+      };
+      const checkout = new window.Razorpay(options);
+      checkout.on('payment.failed', function (response) {
+        const description = response?.error?.description || 'Payment failed or was not completed.';
+        alert(`${description}\n\nYour order remains pending. You can retry payment for the same order from checkout.`);
+        isSubmittingOrder = false;
+        if (placeOrderButton) {
+          placeOrderButton.disabled = false;
+          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Pay Online';
+          placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
+        }
+        placeOrderButton = null;
+      });
+      checkout.open();
+    }
+
     async function handlePlaceOrder(e) {
       e.preventDefault();
       if (isSubmittingOrder) return;
-      if (!cart.length) return alert('Your cart is empty!');
+      if (!cart.length && !pendingRazorpayOrder) return alert('Your cart is empty!');
 
       isSubmittingOrder = true;
       const form = e.currentTarget;
@@ -934,14 +1055,14 @@
       if (placeOrderButton) {
         placeOrderButton.disabled = true;
         placeOrderButton.dataset.originalText = placeOrderButton.textContent;
-        placeOrderButton.textContent = 'Submitting Order...';
+        placeOrderButton.textContent = pendingRazorpayOrder ? 'Opening Payment...' : 'Preparing Order...';
         placeOrderButton.classList.add('opacity-60', 'cursor-not-allowed');
       }
       const releaseOrderLock = () => {
         isSubmittingOrder = false;
         if (placeOrderButton) {
           placeOrderButton.disabled = false;
-          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Place Order';
+          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Pay Online';
           placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
         }
         placeOrderButton = null;
@@ -955,11 +1076,15 @@
         const address = document.getElementById('cust-address').value.trim();
         const payMethodEl = document.querySelector('input[name="pay-method"]:checked');
         if (!name || !phone || !pin || !address) throw new Error('Please fill in all required customer and delivery details.');
-        if (!payMethodEl || payMethodEl.value === 'Cash on Delivery') throw new Error('Cash on Delivery is currently unavailable. Please select online payment.');
-        if (!ORDER_API_URL.trim()) throw new Error('Online order submission is not configured yet. Please contact us on WhatsApp.');
+        if (!payMethodEl || payMethodEl.value !== 'razorpay') throw new Error('Please select Pay Online with Razorpay.');
 
-        // Never send client-calculated prices as authoritative values. Backend uses variant IDs,
-        // reloads current prices, locks stock rows and calculates totals inside one transaction.
+        // If checkout was dismissed previously, retry against the same saved order.
+        if (pendingRazorpayOrder?.id) {
+          await startRazorpayPayment(pendingRazorpayOrder);
+          return;
+        }
+        if (!ORDER_API_URL.trim()) throw new Error('Online order submission is not configured. Please contact us on WhatsApp.');
+
         const orderItems = cart.map(item => {
           const product = products.find(p => String(p.id) === String(item.id));
           const variantId = product?.supabaseVariantsByGrams?.[String(Number(item.weight))];
@@ -983,48 +1108,18 @@
         if (!response.ok || !result.success || !result.order) {
           throw new Error(result.error || `Order submission failed (HTTP ${response.status}). Please try again or contact us on WhatsApp.`);
         }
-
         const savedOrder = result.order;
-        const orderId = savedOrder.order_number;
-        const subtotal = Number(savedOrder.subtotal_paise) / 100;
-        const delivery = Number(savedOrder.shipping_paise) / 100;
-        const grandTotal = Number(savedOrder.total_paise) / 100;
-        const savedItems = Array.isArray(savedOrder.items) ? savedOrder.items : [];
-        const lines = [
-          '*NEW ORDER - ARCHERS GLOBAL TRADERS*',
-          `*Order ID:* ${orderId}`,
-          `*Customer:* ${name}`,
-          `*Mobile:* ${phone}`,
-          `*Email:* ${email || 'Not provided'}`,
-          `*Address:* ${address}`,
-          `*PIN Code:* ${pin}`,
-          '*Payment:* Online payment arrangement pending; no payment was taken by this website.',
-          '', '*ITEMS ORDERED:*',
-          ...savedItems.map((item, idx) => `${idx + 1}. ${item.product_name} (${item.pack_size_grams}g) x ${item.quantity} = ₹${(Number(item.line_total_paise) / 100).toLocaleString('en-IN')}`),
-          '', `*Subtotal:* ₹${subtotal.toLocaleString('en-IN')}`,
-          `*Delivery:* ${delivery === 0 ? 'FREE' : '₹' + delivery.toLocaleString('en-IN')}`,
-          `*Total Amount:* ₹${grandTotal.toLocaleString('en-IN')}`,
-          '', '*Order is recorded as pending. Please confirm payment instructions.*'
-        ];
-        document.getElementById('succ-whatsapp-btn').href = `https://wa.me/918903026202?text=${encodeURIComponent(lines.join('\n'))}`;
-        document.getElementById('succ-order-id').innerText = orderId;
-        document.getElementById('succ-total').innerText = '₹' + grandTotal.toLocaleString('en-IN');
-
-        cart = [];
-        saveCart();
-        updateCartUI();
-        closeCheckoutModal();
-        document.getElementById('order-success-modal').classList.remove('hidden');
-        if (placeOrderButton) {
-          placeOrderButton.disabled = false;
-          placeOrderButton.textContent = placeOrderButton.dataset.originalText || 'Place Order';
-          placeOrderButton.classList.remove('opacity-60', 'cursor-not-allowed');
-        }
-        placeOrderButton = null;
-        // Keep the submission lock until the success modal closes.
+        if (!savedOrder.id) throw new Error('Order was created but the server response did not include its internal ID. Contact Archers Global Traders before retrying to avoid a duplicate order.');
+        pendingRazorpayOrder = {
+          id: savedOrder.id,
+          order_number: savedOrder.order_number,
+          total_paise: Number(savedOrder.total_paise)
+        };
+        sessionStorage.setItem(PENDING_RAZORPAY_KEY, JSON.stringify(pendingRazorpayOrder));
+        await startRazorpayPayment(pendingRazorpayOrder);
       } catch (error) {
-        console.error('Order submission failed:', error);
-        alert(error?.message || 'Could not submit your order. Please try again.');
+        console.error('Order/payment flow failed:', error);
+        alert(error?.message || 'Could not start payment. Please retry the same pending order.');
         releaseOrderLock();
       }
     }
