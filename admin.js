@@ -46,20 +46,45 @@
   }
   async function saveVariant(id){const priceEl=document.querySelector(`[data-price="${id}"]`),stockEl=document.querySelector(`[data-stock="${id}"]`);const price=Number(priceEl.value),stock=Number(stockEl.value);if(!Number.isFinite(price)||price<0||!Number.isInteger(stock)||stock<0){toast('Enter a valid price and whole-number stock quantity.',true);return;}const btn=document.querySelector(`[data-save-variant="${id}"]`);btn.disabled=true;const {error}=await sb.from('product_variants').update({price_paise:Math.round(price*100),stock_quantity:stock,updated_at:new Date().toISOString()}).eq('id',id);btn.disabled=false;if(error){toast(error.message,true);return;}toast('Price and stock saved.');await loadVariants();renderLowStock();}
   const ORDER_STATUSES = ['pending','confirmed','processing','shipped','delivered','cancelled'];
-  async function updateOrderStatus(orderId, nextStatus, button){
-    if(!sb || !ORDER_STATUSES.includes(nextStatus)){toast('Invalid order status.',true);return;}
-    const message = nextStatus === 'cancelled'
-      ? 'Cancel this order? Stock will be restored once, automatically.'
-      : `Change order status to "${nextStatus}"?`;
-    if(!confirm(message)){await loadOrders();return;}
-    if(button)button.disabled=true;
-    const {data,error}=await sb.rpc('admin_update_order_status',{p_order_id:orderId,p_next_status:nextStatus});
-    if(button)button.disabled=false;
-    if(error){toast(`Could not update order status: ${error.message}`,true);await loadOrders();return;}
-    toast(data?.message || (nextStatus==='cancelled'?'Order cancelled; stock restoration handled by database.':'Order status updated.'));
-    await loadOrders();
-    if(nextStatus==='cancelled'){await loadVariants();renderLowStock();}
-  }
+  async function updateOrderStatus(orderId, nextStatus, button) {
+if (!sb || !ORDER_STATUSES.includes(nextStatus)) {
+toast('Invalid order status.', true);
+return;
+}
+
+if (!confirm(`Change order status to "${nextStatus}"?`)) {
+await loadOrders();
+return;
+}
+
+if (button) button.disabled = true;
+
+try {
+const { data, error } = await sb.rpc('admin_update_order_status', {
+p_order_id: orderId,
+p_next_status: nextStatus
+});
+
+```
+if (error) {
+  toast(`Could not update order: ${error.message}`, true);
+  await loadOrders();
+  return;
+}
+
+toast(data?.message || 'Order status updated.');
+await loadOrders();
+```
+
+} catch (err) {
+toast(`Could not update order: ${err.message}`, true);
+await loadOrders();
+
+} finally {
+if (button) button.disabled = false;
+}
+}
+
   async function loadOrders(){
     const body=$('ordersBody');
     if(!sb){body.innerHTML='<tr><td colspan="6">Supabase not configured.</td></tr>';return;}
