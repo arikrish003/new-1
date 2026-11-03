@@ -46,45 +46,42 @@
   }
   async function saveVariant(id){const priceEl=document.querySelector(`[data-price="${id}"]`),stockEl=document.querySelector(`[data-stock="${id}"]`);const price=Number(priceEl.value),stock=Number(stockEl.value);if(!Number.isFinite(price)||price<0||!Number.isInteger(stock)||stock<0){toast('Enter a valid price and whole-number stock quantity.',true);return;}const btn=document.querySelector(`[data-save-variant="${id}"]`);btn.disabled=true;const {error}=await sb.from('product_variants').update({price_paise:Math.round(price*100),stock_quantity:stock,updated_at:new Date().toISOString()}).eq('id',id);btn.disabled=false;if(error){toast(error.message,true);return;}toast('Price and stock saved.');await loadVariants();renderLowStock();}
   const ORDER_STATUSES = ['pending','confirmed','processing','shipped','delivered','cancelled'];
-  async function updateOrderStatus(orderId, nextStatus, button) {
-if (!sb || !ORDER_STATUSES.includes(nextStatus)) {
-toast('Invalid order status.', true);
-return;
-}
-
-if (!confirm(`Change order status to "${nextStatus}"?`)) {
-await loadOrders();
-return;
-}
-
-if (button) button.disabled = true;
-
-try {
-const { data, error } = await sb.rpc('admin_update_order_status', {
-p_order_id: orderId,
-p_next_status: nextStatus
-});
-
-```
-if (error) {
-  toast(`Could not update order: ${error.message}`, true);
-  await loadOrders();
-  return;
-}
-
-toast(data?.message || 'Order status updated.');
-await loadOrders();
-```
-
-} catch (err) {
-toast(`Could not update order: ${err.message}`, true);
-await loadOrders();
-
-} finally {
-if (button) button.disabled = false;
-}
-}
-
+  async function updateOrderStatus(orderId, nextStatus, button){
+    if(!sb || !ORDER_STATUSES.includes(nextStatus)){
+      toast('Invalid order status.', true);
+      return;
+    }
+    const message = nextStatus === 'cancelled'
+      ? 'Cancel this order? Its stock will be restored once.'
+      : `Change order status to "${nextStatus}"?`;
+    if(!confirm(message)){
+      await loadOrders();
+      return;
+    }
+    if(button) button.disabled = true;
+    try {
+      const {data, error} = await sb.rpc('admin_update_order_status', {
+        p_order_id: orderId,
+        p_next_status: nextStatus
+      });
+      if(error){
+        toast(`Could not update order: ${error.message}`, true);
+        await loadOrders();
+        return;
+      }
+      toast(data?.message || 'Order status updated.');
+      await loadOrders();
+      if(nextStatus === 'cancelled'){
+        await loadVariants();
+        renderLowStock();
+      }
+    } catch(err) {
+      toast(`Could not update order: ${err.message}`, true);
+      await loadOrders();
+    } finally {
+      if(button) button.disabled = false;
+    }
+  }
   async function loadOrders(){
     const body=$('ordersBody');
     if(!sb){body.innerHTML='<tr><td colspan="6">Supabase not configured.</td></tr>';return;}
@@ -100,8 +97,9 @@ if (button) button.disabled = false;
       const items=itemMap[o.id]||[];
       const itemSummary=itemError?'Items unavailable':items.length?items.map(it=>`${escapeHtml(it.product_name)} (${escapeHtml(PACK_LABEL(it.pack_size_grams))}) × ${Number(it.quantity)} — ${money(it.line_total_paise)}`).join('<br>'):'No item rows';
       const status=String(o.order_status||'pending').toLowerCase();
+      const isCancelled = status === 'cancelled';
       const options=ORDER_STATUSES.map(st=>`<option value="${st}" ${st===status?'selected':''}>${st[0].toUpperCase()+st.slice(1)}</option>`).join('');
-      return `<tr><td><strong>${escapeHtml(o.order_number||String(o.id||'').slice(0,12))}</strong><div class="muted" style="font-size:10px">${escapeHtml(String(o.id||'').slice(0,8))}…</div></td><td><strong>${escapeHtml(o.customer_name||'—')}</strong><div class="muted">${escapeHtml(o.customer_email||'')}</div><div class="muted">${escapeHtml(o.customer_phone||'')}</div><details style="margin-top:6px"><summary style="cursor:pointer;color:#0d5a40">${items.length} item(s)</summary><div style="font-size:12px;line-height:1.8;padding-top:5px">${itemSummary}</div></details></td><td>${money(o.total_paise)}</td><td><span class="badge ${String(o.payment_status)==='paid'?'green':'amber'}">${escapeHtml(o.payment_status||'pending')}</span><div class="muted">${escapeHtml(o.payment_method||'—')}</div></td><td><select aria-label="Order status" data-order-status="${escapeHtml(o.id)}" style="max-width:135px;padding:7px;border:1px solid var(--line);border-radius:7px;background:#fff">${options}</select><button class="btn small primary" data-save-order-status="${escapeHtml(o.id)}" style="margin-top:6px">Save</button></td><td>${escapeHtml(o.created_at?new Date(o.created_at).toLocaleString():'—')}</td></tr>`;
+      return `<tr><td><strong>${escapeHtml(o.order_number||String(o.id||'').slice(0,12))}</strong><div class="muted" style="font-size:10px">${escapeHtml(String(o.id||'').slice(0,8))}…</div></td><td><strong>${escapeHtml(o.customer_name||'—')}</strong><div class="muted">${escapeHtml(o.customer_email||'')}</div><div class="muted">${escapeHtml(o.customer_phone||'')}</div><details style="margin-top:6px"><summary style="cursor:pointer;color:#0d5a40">${items.length} item(s)</summary><div style="font-size:12px;line-height:1.8;padding-top:5px">${itemSummary}</div></details></td><td>${money(o.total_paise)}</td><td><span class="badge ${String(o.payment_status)==='paid'?'green':'amber'}">${escapeHtml(o.payment_status||'pending')}</span><div class="muted">${escapeHtml(o.payment_method||'—')}</div></td><td><select aria-label="Order status" data-order-status="${escapeHtml(o.id)}" ${isCancelled?'disabled title="Cancelled orders are locked"':''} style="max-width:135px;padding:7px;border:1px solid var(--line);border-radius:7px;background:#fff">${options}</select><button class="btn small primary" data-save-order-status="${escapeHtml(o.id)}" ${isCancelled?'disabled title="Cancelled orders are locked"':''} style="margin-top:6px">${isCancelled?'Cancelled':'Save'}</button></td><td>${escapeHtml(o.created_at?new Date(o.created_at).toLocaleString():'—')}</td></tr>`;
     }).join('');
   }
   function renderLowStock(){const low=variants.map(v=>({...v,product:products.find(p=>p.id===v.product_id)})).filter(v=>Number(v.stock_quantity)<=5).sort((a,b)=>a.stock_quantity-b.stock_quantity).slice(0,8);$('lowStockBody').innerHTML=low.length?low.map(v=>`<tr><td>${escapeHtml(v.product?.name||'Unknown')}</td><td>${PACK_LABEL(v.pack_size_grams)}</td><td>${money(v.price_paise)}</td><td>${v.stock_quantity}</td><td><span class="badge ${Number(v.stock_quantity)===0?'red':'amber'}">${Number(v.stock_quantity)===0?'Out of stock':'Low stock'}</span></td></tr>`).join(''):'<tr><td colspan="5" class="muted">No low-stock variants, or inventory has not been added yet.</td></tr>';const total=variants.length,available=variants.filter(v=>Number(v.stock_quantity)>0).length,empty=$('inventoryChart');empty.innerHTML=`<strong>${available} of ${total} pack variants currently have stock</strong><span>${total?Math.round(available/total*100):0}% available · Data from Supabase</span><div style="width:min(380px,90%);height:9px;background:#e7eee8;border-radius:20px;margin-top:18px;overflow:hidden"><div style="width:${total?available/total*100:0}%;height:100%;background:#18764c;border-radius:20px"></div></div>`;}
